@@ -4,6 +4,10 @@ analyzer:
   errors:
     avoid_web_libraries_in_flutter: ignore
 
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
 linter:
   rules:
     - always_declare_return_types

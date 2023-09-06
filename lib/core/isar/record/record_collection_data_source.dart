@@ -7,7 +7,7 @@ class RecordCollectionDataSource {
   final isar = IsarInstance().isar;
   // 一覧取得
   Future<List<Record>> fetchRecordList() async {
-    return isar.records.where().findAll();
+    return isar.records.where().sortByNum().findAll();
   }
 
   // 単体データ取得
@@ -29,5 +29,14 @@ class RecordCollectionDataSource {
   }) async {
     // データ削除
     await isar.records.delete(id);
+  }
+
+  // リストの順番を更新
+  // 更新したnumでレコードを全て更新する
+  Future<void> updateRecordListOrder({
+    required List<Record> recordList,
+  }) async {
+    // データ更新
+    await isar.records.putAll(recordList);
   }
 }

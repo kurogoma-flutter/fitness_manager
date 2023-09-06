@@ -9,6 +9,8 @@ part 'record_collection.g.dart';
 class Record {
   Id id = Isar.autoIncrement;
 
+  int num = Isar.autoIncrement;
+
   late String category;
 
   late double load;

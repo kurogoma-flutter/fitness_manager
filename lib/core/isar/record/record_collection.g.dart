@@ -32,24 +32,29 @@ const RecordSchema = CollectionSchema(
       name: r'load',
       type: IsarType.double,
     ),
-    r'rmUnitType': PropertySchema(
+    r'num': PropertySchema(
       id: 3,
+      name: r'num',
+      type: IsarType.long,
+    ),
+    r'rmUnitType': PropertySchema(
+      id: 4,
       name: r'rmUnitType',
       type: IsarType.byte,
       enumMap: _RecordrmUnitTypeEnumValueMap,
     ),
     r'time': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'time',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'weightUnitType': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'weightUnitType',
       type: IsarType.byte,
       enumMap: _RecordweightUnitTypeEnumValueMap,
@@ -103,10 +108,11 @@ void _recordSerialize(
   writer.writeString(offsets[0], object.category);
   writer.writeDateTime(offsets[1], object.createdAt);
   writer.writeDouble(offsets[2], object.load);
-  writer.writeByte(offsets[3], object.rmUnitType.index);
-  writer.writeString(offsets[4], object.time);
-  writer.writeDateTime(offsets[5], object.updatedAt);
-  writer.writeByte(offsets[6], object.weightUnitType.index);
+  writer.writeLong(offsets[3], object.num);
+  writer.writeByte(offsets[4], object.rmUnitType.index);
+  writer.writeString(offsets[5], object.time);
+  writer.writeDateTime(offsets[6], object.updatedAt);
+  writer.writeByte(offsets[7], object.weightUnitType.index);
 }
 
 Record _recordDeserialize(
@@ -120,13 +126,14 @@ Record _recordDeserialize(
   object.createdAt = reader.readDateTime(offsets[1]);
   object.id = id;
   object.load = reader.readDouble(offsets[2]);
+  object.num = reader.readLong(offsets[3]);
   object.rmUnitType =
-      _RecordrmUnitTypeValueEnumMap[reader.readByteOrNull(offsets[3])] ??
+      _RecordrmUnitTypeValueEnumMap[reader.readByteOrNull(offsets[4])] ??
           RmUnitType.times;
-  object.time = reader.readString(offsets[4]);
-  object.updatedAt = reader.readDateTime(offsets[5]);
+  object.time = reader.readString(offsets[5]);
+  object.updatedAt = reader.readDateTime(offsets[6]);
   object.weightUnitType =
-      _RecordweightUnitTypeValueEnumMap[reader.readByteOrNull(offsets[6])] ??
+      _RecordweightUnitTypeValueEnumMap[reader.readByteOrNull(offsets[7])] ??
           WeightUnitType.kg;
   return object;
 }
@@ -145,13 +152,15 @@ P _recordDeserializeProp<P>(
     case 2:
       return (reader.readDouble(offset)) as P;
     case 3:
+      return (reader.readLong(offset)) as P;
+    case 4:
       return (_RecordrmUnitTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           RmUnitType.times) as P;
-    case 4:
-      return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
+      return (reader.readDateTime(offset)) as P;
+    case 7:
       return (_RecordweightUnitTypeValueEnumMap[
               reader.readByteOrNull(offset)] ??
           WeightUnitType.kg) as P;
@@ -666,6 +675,58 @@ extension RecordQueryFilter on QueryBuilder<Record, Record, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Record, Record, QAfterFilterCondition> numEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'num',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> numGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'num',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> numLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'num',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> numBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'num',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Record, Record, QAfterFilterCondition> rmUnitTypeEqualTo(
       RmUnitType value) {
     return QueryBuilder.apply(this, (query) {
@@ -996,6 +1057,18 @@ extension RecordQuerySortBy on QueryBuilder<Record, Record, QSortBy> {
     });
   }
 
+  QueryBuilder<Record, Record, QAfterSortBy> sortByNum() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'num', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterSortBy> sortByNumDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'num', Sort.desc);
+    });
+  }
+
   QueryBuilder<Record, Record, QAfterSortBy> sortByRmUnitType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'rmUnitType', Sort.asc);
@@ -1094,6 +1167,18 @@ extension RecordQuerySortThenBy on QueryBuilder<Record, Record, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Record, Record, QAfterSortBy> thenByNum() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'num', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterSortBy> thenByNumDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'num', Sort.desc);
+    });
+  }
+
   QueryBuilder<Record, Record, QAfterSortBy> thenByRmUnitType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'rmUnitType', Sort.asc);
@@ -1163,6 +1248,12 @@ extension RecordQueryWhereDistinct on QueryBuilder<Record, Record, QDistinct> {
     });
   }
 
+  QueryBuilder<Record, Record, QDistinct> distinctByNum() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'num');
+    });
+  }
+
   QueryBuilder<Record, Record, QDistinct> distinctByRmUnitType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'rmUnitType');
@@ -1211,6 +1302,12 @@ extension RecordQueryProperty on QueryBuilder<Record, Record, QQueryProperty> {
   QueryBuilder<Record, double, QQueryOperations> loadProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'load');
+    });
+  }
+
+  QueryBuilder<Record, int, QQueryOperations> numProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'num');
     });
   }
 

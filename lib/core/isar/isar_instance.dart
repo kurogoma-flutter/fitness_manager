@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'recrod/record_collection.dart';
+import 'record/record_collection.dart';
 import 'todo/todo_collection.dart';
 
 class IsarInstance {
