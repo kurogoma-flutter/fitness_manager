@@ -174,12 +174,14 @@ const _RecordrmUnitTypeEnumValueMap = {
   'rm': 1,
   'minute': 2,
   'second': 3,
+  'set': 4,
 };
 const _RecordrmUnitTypeValueEnumMap = {
   0: RmUnitType.times,
   1: RmUnitType.rm,
   2: RmUnitType.minute,
   3: RmUnitType.second,
+  4: RmUnitType.set,
 };
 const _RecordweightUnitTypeEnumValueMap = {
   'kg': 0,

@@ -3,4 +3,5 @@ enum RmUnitType {
   rm,
   minute,
   second,
+  set,
 }
