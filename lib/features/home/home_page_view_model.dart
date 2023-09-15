@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/isar/record/record_collection_data_source.dart';
+import '../../demo/dummy_record_list.dart';
 import 'home_page_state.dart';
 
 final homePageViewModelProvider =
@@ -15,6 +16,11 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
 
   Future<void> fetchRecordList() async {
     final recordList = await _dataSource.fetchRecordList();
+    state = state.copyWith(recordList: recordList);
+  }
+
+  Future<void> fetchDummyRecordList() async {
+    final recordList = dummyRecordList;
     state = state.copyWith(recordList: recordList);
   }
 }
