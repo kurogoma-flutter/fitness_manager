@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/isar/record/record_collection_data_source.dart';
@@ -20,6 +21,7 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
   }
 
   Future<void> fetchDummyRecordList() async {
+    debugPrint('fetchDummyRecordList');
     final recordList = dummyRecordList;
     state = state.copyWith(recordList: recordList);
   }

@@ -11,7 +11,7 @@ class Application extends StatelessWidget {
     return MaterialApp.router(
       theme: ThemeData(
         useMaterial3: true,
-        primaryColor: CustomColor.white,
+        primaryColor: const Color.fromARGB(255, 59, 97, 252),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         canvasColor: CustomColor.transparent,
         highlightColor: CustomColor.transparent,
