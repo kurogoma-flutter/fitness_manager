@@ -54,6 +54,15 @@ class AppRouter {
     }
   }
 
+  Future<void> showBottomSheet(BuildContext context, Widget body) {
+    return showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return body;
+      },
+    );
+  }
+
   // ボトムシートを閉じる
   void closeBottomSheet(BuildContext context) {
     Navigator.of(context).pop();

@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
+import '../component/form/input_text_form.dart';
 import '../component/text/middle_headline_text.dart';
 import 'home_page_view_model.dart';
+
+final formKey = GlobalKey<FormState>();
+final textFormKey = GlobalKey<FormFieldState<String>>();
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
@@ -93,7 +98,33 @@ class HomePage extends HookConsumerWidget {
                 padding: const EdgeInsets.all(16),
                 sliver: SliverToBoxAdapter(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await AppRouter().showBottomSheet(
+                        context,
+                        Container(
+                          height: MediaQuery.sizeOf(context).height * 0.8,
+                          width: MediaQuery.sizeOf(context).width,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
+                          ),
+                          child: Form(
+                            key: formKey,
+                            child: Column(
+                              children: [
+                                InputTextForm(
+                                  textFormKey: textFormKey,
+                                  validator: (text) => '',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                         ColorTheme.primaryOrange,

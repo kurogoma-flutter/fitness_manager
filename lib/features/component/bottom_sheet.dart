@@ -59,6 +59,12 @@ class PrimaryBottomSheet extends StatelessWidget {
           filter: _filter,
           child: Container(
             color: backGroundMaskColor,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -86,19 +92,6 @@ class PrimaryBottomSheet extends StatelessWidget {
                         width: headerSideSpace,
                       ),
                     ],
-                  ),
-                ),
-                Container(
-                  height: borderHeight,
-                  width: borderWidth,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.horizontal(
-                      right: Radius.circular(borderHeight / 2),
-                    ),
-                    gradient: LinearGradient(
-                      tileMode: TileMode.repeated,
-                      colors: [backgroundColorBegin, backgroundColorEnd],
-                    ),
                   ),
                 ),
                 body,
