@@ -4,14 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
-import '../component/form/input_text_form.dart';
 import '../component/text/middle_headline_text.dart';
+import 'components/create_item_bottom_sheet.dart';
+import 'components/floating_action_button_widget.dart';
 import 'home_page_view_model.dart';
-
-final formKey = GlobalKey<FormState>();
-final textFormKey = GlobalKey<FormFieldState<String>>();
-final textFormKey2 = GlobalKey<FormFieldState<String>>();
-final secondComponentKey = GlobalKey();
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
@@ -34,14 +30,6 @@ class HomePage extends HookConsumerWidget {
 
     final state = ref.watch(homePageViewModelProvider);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorTheme.primaryBlack,
-        elevation: 4,
-        title: const MiddleHeadlineText(
-          'Fitness Record',
-          textColor: Colors.white,
-        ),
-      ),
       body: Stack(
         children: [
           CustomScrollView(
@@ -71,40 +59,16 @@ class HomePage extends HookConsumerWidget {
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12,
-                                vertical: 8,
+                                vertical: 10,
                               ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    state.recordList[index].category,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    state.recordList[index].load.toString(),
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    state.recordList[index].weightUnitType.name,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  const Text(
-                                    'x',
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    state.recordList[index].time,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    state.recordList[index].rmUnitType.name,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                ],
+                              child: Text(
+                                '${state.recordList[index].category} ${state.recordList[index].load} ${state.recordList[index].weightUnitType.name} x ${state.recordList[index].time} ${state.recordList[index].rmUnitType.name}',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           );
@@ -119,38 +83,7 @@ class HomePage extends HookConsumerWidget {
                     onPressed: () async {
                       await AppRouter().showBottomSheet(
                         context,
-                        Container(
-                          height: MediaQuery.sizeOf(context).height * 0.8,
-                          width: MediaQuery.sizeOf(context).width,
-                          padding: const EdgeInsets.only(
-                            top: 24,
-                            left: 16,
-                            right: 16,
-                          ),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16),
-                            ),
-                          ),
-                          child: Form(
-                            key: formKey,
-                            child: Column(
-                              children: [
-                                InputTextForm(
-                                  textFormKey: textFormKey,
-                                  validator: (text) => '',
-                                ),
-                                const SizedBox(height: 24),
-                                InputTextForm(
-                                  textFormKey: textFormKey2,
-                                  validator: (text) => '',
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        const CreateItemBottomSheet(),
                       );
                     },
                     style: ButtonStyle(
@@ -177,33 +110,6 @@ class HomePage extends HookConsumerWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class FloatingActionButtonWidgets extends ConsumerWidget {
-  const FloatingActionButtonWidgets({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      children: [
-        FloatingActionButton(
-          backgroundColor: ColorTheme.primaryOrange,
-          heroTag: 'menu',
-          onPressed: () {},
-          child: const Icon(Icons.menu),
-        ),
-        const SizedBox(height: 16),
-        FloatingActionButton(
-          backgroundColor: ColorTheme.primaryOrange,
-          heroTag: 'reload',
-          onPressed: () {
-            ref.read(homePageViewModelProvider.notifier).fetchDummyRecordList();
-          },
-          child: const Icon(Icons.replay_outlined),
-        )
-      ],
     );
   }
 }
