@@ -185,13 +185,11 @@ const _RecordrmUnitTypeValueEnumMap = {
 };
 const _RecordweightUnitTypeEnumValueMap = {
   'kg': 0,
-  'lb': 1,
-  'lbs': 2,
+  'lbs': 1,
 };
 const _RecordweightUnitTypeValueEnumMap = {
   0: WeightUnitType.kg,
-  1: WeightUnitType.lb,
-  2: WeightUnitType.lbs,
+  1: WeightUnitType.lbs,
 };
 
 Id _recordGetId(Record object) {

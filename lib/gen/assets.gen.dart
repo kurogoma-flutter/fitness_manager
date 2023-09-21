@@ -27,9 +27,13 @@ class $AssetsImagesGen {
   AssetGenImage get kurogomaSplash =>
       const AssetGenImage('assets/images/kurogoma-splash.png');
 
+  /// File path: assets/images/list_choice_tooltip.png
+  AssetGenImage get listChoiceTooltip =>
+      const AssetGenImage('assets/images/list_choice_tooltip.png');
+
   /// List of all assets
   List<AssetGenImage> get values =>
-      [fitnessIcon, homeHeader, icon, kurogomaSplash];
+      [fitnessIcon, homeHeader, icon, kurogomaSplash, listChoiceTooltip];
 }
 
 class Assets {
