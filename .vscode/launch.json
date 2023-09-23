@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "feature_architecture_template",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "FLAVOR=develop",
+            ]
+        },
+        {
+            "name": "feature_architecture_template (staging mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "args": [
+                "FLAVOR=staging",
+            ]
+        },
+        {
+            "name": "feature_architecture_template (production mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "FLAVOR=production",
+            ]
+        }
+    ]
+}
