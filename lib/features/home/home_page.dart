@@ -10,6 +10,8 @@ import 'home_page_view_model.dart';
 
 final formKey = GlobalKey<FormState>();
 final textFormKey = GlobalKey<FormFieldState<String>>();
+final textFormKey2 = GlobalKey<FormFieldState<String>>();
+final secondComponentKey = GlobalKey();
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
@@ -73,19 +75,35 @@ class HomePage extends HookConsumerWidget {
                               ),
                               child: Row(
                                 children: [
-                                  Text(state.recordList[index].category),
+                                  Text(
+                                    state.recordList[index].category,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
                                   const SizedBox(width: 4),
-                                  Text(state.recordList[index].load.toString()),
+                                  Text(
+                                    state.recordList[index].load.toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
                                   const SizedBox(width: 4),
                                   Text(
                                     state.recordList[index].weightUnitType.name,
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                   const SizedBox(width: 4),
-                                  const Text('x'),
+                                  const Text(
+                                    'x',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                   const SizedBox(width: 4),
-                                  Text(state.recordList[index].time),
+                                  Text(
+                                    state.recordList[index].time,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
                                   const SizedBox(width: 4),
-                                  Text(state.recordList[index].rmUnitType.name),
+                                  Text(
+                                    state.recordList[index].rmUnitType.name,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
                                 ],
                               ),
                             ),
@@ -104,6 +122,11 @@ class HomePage extends HookConsumerWidget {
                         Container(
                           height: MediaQuery.sizeOf(context).height * 0.8,
                           width: MediaQuery.sizeOf(context).width,
+                          padding: const EdgeInsets.only(
+                            top: 24,
+                            left: 16,
+                            right: 16,
+                          ),
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
@@ -117,6 +140,11 @@ class HomePage extends HookConsumerWidget {
                               children: [
                                 InputTextForm(
                                   textFormKey: textFormKey,
+                                  validator: (text) => '',
+                                ),
+                                const SizedBox(height: 24),
+                                InputTextForm(
+                                  textFormKey: textFormKey2,
                                   validator: (text) => '',
                                 ),
                               ],

@@ -1,4 +1,4 @@
-# feature_architecture_template
+# fitness_records
 
 A new Flutter project.
 

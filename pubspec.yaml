@@ -1,4 +1,4 @@
-name: feature_architecture_template
+name: fitness_records
 description: A new Flutter project.
 
 publish_to: "none"
@@ -67,7 +67,7 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/icon.png"
+  image_path: "assets/images/fitness-icon.png"
 
 flutter_native_splash:
   image: "assets/images/kurogoma-splash.png"

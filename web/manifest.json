@@ -1,6 +1,6 @@
 {
-    "name": "feature_architecture_template",
-    "short_name": "feature_architecture_template",
+    "name": "fitness_records",
+    "short_name": "fitness_records",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

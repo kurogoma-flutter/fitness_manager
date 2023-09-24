@@ -1,4 +1,4 @@
-package com.example.feature_architecture_template
+package com.example.fitness_records
 
 import io.flutter.embedding.android.FlutterActivity
 

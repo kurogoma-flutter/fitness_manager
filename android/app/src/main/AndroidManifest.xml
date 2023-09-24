@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.feature_architecture_template">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.fitness_records">
     <!-- Provide required visibility configuration for API level 30 and above -->
     <queries>
         <!-- If your app opens https URLs -->
@@ -17,7 +17,7 @@
             <data android:scheme="tel" />
         </intent>
     </queries>
-    <application android:label="feature_architecture_template" android:name="${applicationName}" android:icon="@mipmap/ic_launcher">
+    <application android:label="FITNESS RECORD" android:name="${applicationName}" android:icon="@mipmap/ic_launcher">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
