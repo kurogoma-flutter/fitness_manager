@@ -33,6 +33,8 @@ class HomePage extends HookConsumerWidget {
         ),
       ),
       body: CustomScrollView(
+        primary: true,
+        physics: const BouncingScrollPhysics(),
         slivers: [
           state.recordList.isEmpty
               ? const SliverToBoxAdapter(
@@ -56,10 +58,17 @@ class HomePage extends HookConsumerWidget {
                           child: Row(
                             children: [
                               Text(state.recordList[index].category),
+                              const SizedBox(width: 4),
                               Text(state.recordList[index].load.toString()),
-                              Text(state.recordList[index].weightUnitType.name),
-                              const Text(' x '),
+                              const SizedBox(width: 4),
+                              Text(
+                                state.recordList[index].weightUnitType.name,
+                              ),
+                              const SizedBox(width: 4),
+                              const Text('x'),
+                              const SizedBox(width: 4),
                               Text(state.recordList[index].time),
+                              const SizedBox(width: 4),
                               Text(state.recordList[index].rmUnitType.name),
                             ],
                           ),
