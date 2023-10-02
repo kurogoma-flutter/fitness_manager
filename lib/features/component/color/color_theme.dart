@@ -11,7 +11,8 @@ class ColorTheme {
   static Color secondaryBlack = const Color(0xB35B5B5B);
 
   static Color primaryBackGround = const Color(0xFF1B1A22);
-  static Color primaryCard = const Color(0xFF2F2C3A);
+  static Color primaryCard = const Color(0xFF424146);
+  static Color secondaryCard = const Color(0xFF66646E);
   static Color primaryActive = const Color(0xFFfe6952);
   static Color primaryText = const Color(0xFFB9B9BD);
   static Color primaryIcon = const Color(0xFF8D8A9C);

@@ -10,7 +10,4 @@ class TipItem with _$TipItem {
     required String title,
     required String linkUrl,
   }) = _TipItem;
-
-  factory TipItem.fromJson(Map<String, dynamic> json) =>
-      _$TipItemFromJson(json);
 }

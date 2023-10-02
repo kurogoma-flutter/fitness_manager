@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-TipItem _$TipItemFromJson(Map<String, dynamic> json) {
-  return _TipItem.fromJson(json);
-}
-
 /// @nodoc
 mixin _$TipItem {
   String get id => throw _privateConstructorUsedError;
@@ -25,7 +21,6 @@ mixin _$TipItem {
   String get title => throw _privateConstructorUsedError;
   String get linkUrl => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TipItemCopyWith<TipItem> get copyWith => throw _privateConstructorUsedError;
 }
@@ -124,16 +119,13 @@ class __$$_TipItemCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_TipItem implements _TipItem {
   const _$_TipItem(
       {required this.id,
       required this.thumbnailUrl,
       required this.title,
       required this.linkUrl});
-
-  factory _$_TipItem.fromJson(Map<String, dynamic> json) =>
-      _$$_TipItemFromJson(json);
 
   @override
   final String id;
@@ -161,7 +153,6 @@ class _$_TipItem implements _TipItem {
             (identical(other.linkUrl, linkUrl) || other.linkUrl == linkUrl));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, thumbnailUrl, title, linkUrl);
@@ -171,13 +162,6 @@ class _$_TipItem implements _TipItem {
   @pragma('vm:prefer-inline')
   _$$_TipItemCopyWith<_$_TipItem> get copyWith =>
       __$$_TipItemCopyWithImpl<_$_TipItem>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_TipItemToJson(
-      this,
-    );
-  }
 }
 
 abstract class _TipItem implements TipItem {
@@ -186,8 +170,6 @@ abstract class _TipItem implements TipItem {
       required final String thumbnailUrl,
       required final String title,
       required final String linkUrl}) = _$_TipItem;
-
-  factory _TipItem.fromJson(Map<String, dynamic> json) = _$_TipItem.fromJson;
 
   @override
   String get id;
