@@ -16,6 +16,14 @@ class $AssetsImagesGen {
   AssetGenImage get fitnessIcon =>
       const AssetGenImage('assets/images/fitness-icon.png');
 
+  /// File path: assets/images/home-icon-active.png
+  AssetGenImage get homeIconActive =>
+      const AssetGenImage('assets/images/home-icon-active.png');
+
+  /// File path: assets/images/home-icon.png
+  AssetGenImage get homeIcon =>
+      const AssetGenImage('assets/images/home-icon.png');
+
   /// File path: assets/images/home_header.png
   AssetGenImage get homeHeader =>
       const AssetGenImage('assets/images/home_header.png');
@@ -31,9 +39,36 @@ class $AssetsImagesGen {
   AssetGenImage get listChoiceTooltip =>
       const AssetGenImage('assets/images/list_choice_tooltip.png');
 
+  /// File path: assets/images/setting-icon-active.png
+  AssetGenImage get settingIconActive =>
+      const AssetGenImage('assets/images/setting-icon-active.png');
+
+  /// File path: assets/images/setting-icon.png
+  AssetGenImage get settingIcon =>
+      const AssetGenImage('assets/images/setting-icon.png');
+
+  /// File path: assets/images/tips-con.png
+  AssetGenImage get tipsCon =>
+      const AssetGenImage('assets/images/tips-con.png');
+
+  /// File path: assets/images/tips-icon-active.png
+  AssetGenImage get tipsIconActive =>
+      const AssetGenImage('assets/images/tips-icon-active.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [fitnessIcon, homeHeader, icon, kurogomaSplash, listChoiceTooltip];
+  List<AssetGenImage> get values => [
+        fitnessIcon,
+        homeIconActive,
+        homeIcon,
+        homeHeader,
+        icon,
+        kurogomaSplash,
+        listChoiceTooltip,
+        settingIconActive,
+        settingIcon,
+        tipsCon,
+        tipsIconActive
+      ];
 }
 
 class Assets {

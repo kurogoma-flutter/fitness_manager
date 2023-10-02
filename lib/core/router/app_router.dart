@@ -20,7 +20,7 @@ class AppRouter {
     Map<String, String> params = const <String, String>{},
     Object? extra,
   }) {
-    context.goNamed(name, queryParams: params, extra: extra);
+    context.goNamed(name, queryParameters: params, extra: extra);
   }
 
   /// pushで[name]に遷移
@@ -30,7 +30,7 @@ class AppRouter {
     Map<String, String> params = const <String, String>{},
     Object? extra,
   }) {
-    context.pushNamed(name, queryParams: params, extra: extra);
+    context.pushNamed(name, queryParameters: params, extra: extra);
   }
 
   /// 画面をpop

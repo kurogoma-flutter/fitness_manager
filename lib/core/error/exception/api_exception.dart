@@ -19,19 +19,19 @@ abstract class ApiException with _$ApiException {
   const factory ApiException.unexpectedException() = _UnexpectedException;
 
   factory ApiException.getApiException(exception) {
-    if (exception is DioError) {
+    if (exception is DioException) {
       switch (exception.type) {
-        case DioErrorType.connectionError:
-        case DioErrorType.sendTimeout:
-        case DioErrorType.receiveTimeout:
-        case DioErrorType.connectionTimeout:
+        case DioExceptionType.connectionError:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+        case DioExceptionType.connectionTimeout:
           return const ApiException.requestTimeout();
-        case DioErrorType.badResponse:
+        case DioExceptionType.badResponse:
           return const ApiException.responseError();
-        case DioErrorType.badCertificate:
+        case DioExceptionType.badCertificate:
           return const ApiException.sslVerificationError();
-        case DioErrorType.cancel:
-        case DioErrorType.unknown:
+        case DioExceptionType.cancel:
+        case DioExceptionType.unknown:
           return exception.error is HandshakeException
               ? const ApiException.sslVerificationError()
               : const ApiException.requestException();

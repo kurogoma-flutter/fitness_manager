@@ -7,14 +7,13 @@ import '../../gen/assets.gen.dart';
 import '../component/color/color_theme.dart';
 import '../component/text/middle_headline_text.dart';
 import 'components/create_item_bottom_sheet.dart';
-import 'components/floating_action_button_widget.dart';
 import 'home_page_view_model.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
 
   static const routeName = 'home';
-  static const routePath = '/';
+  static const routePath = '/home';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,11 +29,13 @@ class HomePage extends HookConsumerWidget {
     );
 
     final state = ref.watch(homePageViewModelProvider);
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            CustomScrollView(
+    return Scaffold(
+      backgroundColor: ColorTheme.primaryBackGround,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
+            child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [
                 SliverToBoxAdapter(
@@ -54,7 +55,7 @@ class HomePage extends HookConsumerWidget {
                           child: Center(
                             child: MiddleHeadlineText(
                               'レコードがありません',
-                              textColor: ColorTheme.primaryBlack,
+                              textColor: ColorTheme.primaryWhite,
                             ),
                           ),
                         ),
@@ -62,25 +63,28 @@ class HomePage extends HookConsumerWidget {
                     : SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                            return Card(
-                              color: ColorTheme.secondaryOrange,
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 6,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 10,
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: ColorTheme.primaryCard,
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Text(
-                                  '${state.recordList[index].category} ${state.recordList[index].load} ${state.recordList[index].weightUnitType.name} x ${state.recordList[index].time} ${state.recordList[index].rmUnitType.name}',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 12,
+                                    top: 16,
+                                    bottom: 16,
                                   ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Text(
+                                    '${state.recordList[index].category} ${state.recordList[index].load}${state.recordList[index].weightUnitType.text} x ${state.recordList[index].time}${state.recordList[index].rmUnitType.text}',
+                                    style: TextStyle(
+                                      color: ColorTheme.primaryText,
+                                      fontSize: 15,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                             );
@@ -100,7 +104,7 @@ class HomePage extends HookConsumerWidget {
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          ColorTheme.primaryOrange,
+                          ColorTheme.primaryActive,
                         ),
                       ),
                       child: const Icon(
@@ -115,13 +119,8 @@ class HomePage extends HookConsumerWidget {
                 ),
               ],
             ),
-            const Positioned(
-              bottom: 24,
-              right: 24,
-              child: FloatingActionButtonWidgets(),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

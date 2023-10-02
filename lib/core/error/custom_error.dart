@@ -13,7 +13,7 @@ class CustomApiException extends ServerError {
     required int statusCode,
   }) : super(error: errorCode, statusCode: statusCode);
 
-  factory CustomApiException.fromDioError(DioError error) {
+  factory CustomApiException.fromDioError(DioException error) {
     final response = error.response;
     if (response != null) {
       final statusCode = response.statusCode ?? 500;

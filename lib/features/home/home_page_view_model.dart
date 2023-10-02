@@ -11,7 +11,10 @@ final homePageViewModelProvider =
 );
 
 class HomePageViewModel extends StateNotifier<HomePageState> {
-  HomePageViewModel() : super(const HomePageState());
+  HomePageViewModel()
+      : super(
+          const HomePageState(recordList: []),
+        );
 
   final _dataSource = RecordCollectionDataSource();
 

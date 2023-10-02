@@ -1,24 +1,65 @@
 // ボトムナビゲーションを非表示にしたいルートパスを指定
 
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/component/scaffold_with_bottom_navigation_bar.dart';
 import '../../features/home/home_page.dart';
+import '../../features/setting/setting_page.dart';
+import '../../features/tips/tips_page.dart';
+
+final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+final _shellHomeNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shellHome');
+final _shellTipsNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shellTips');
+final _shellSettingsNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
 
 final router = GoRouter(
+  navigatorKey: _rootNavigatorKey,
   debugLogDiagnostics: true,
-  initialLocation: '/',
+  initialLocation: HomePage.routePath,
   // URLリクエストエラー時
   // errorBuilder: (context, state) {
   //   return const CommonErrorPage();
   // },
 
   /// ルート定義
-  routes: [
-    /// 起動動線
-    GoRoute(
-      name: HomePage.routeName,
-      path: HomePage.routePath,
-      builder: (_, __) => const HomePage(),
+  routes: <RouteBase>[
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return ScaffoldWithBottomNavigationBar(navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          navigatorKey: _shellSettingsNavigatorKey,
+          routes: <RouteBase>[
+            GoRoute(
+              path: SettingPage.routePath,
+              builder: (context, state) => const SettingPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: _shellHomeNavigatorKey,
+          routes: <RouteBase>[
+            GoRoute(
+              path: HomePage.routePath,
+              builder: (context, state) => const HomePage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: _shellTipsNavigatorKey,
+          routes: <RouteBase>[
+            GoRoute(
+              path: TipsPage.routePath,
+              builder: (context, state) => const TipsPage(),
+            ),
+          ],
+        ),
+      ],
     ),
 
     // /// アプリホーム
