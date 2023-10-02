@@ -93,7 +93,7 @@ class HomePage extends HookConsumerWidget {
                         ),
                       ),
                 SliverPadding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   sliver: SliverToBoxAdapter(
                     child: ElevatedButton(
                       onPressed: () async {

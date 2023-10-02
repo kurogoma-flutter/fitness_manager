@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../core/isar/record/record_collection.dart';
+import '../../core/model/isar/record/record_collection.dart';
 
 part 'home_page_state.freezed.dart';
 

@@ -1,6 +1,6 @@
 import '../core/enum/rm_unit_type.dart';
 import '../core/enum/weight_unit_type.dart';
-import '../core/isar/record/record_collection.dart';
+import '../core/model/isar/record/record_collection.dart';
 
 final List<Record> dummyRecordList = [
   Record()
