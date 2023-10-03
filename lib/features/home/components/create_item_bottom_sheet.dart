@@ -4,6 +4,7 @@ import '../../../core/enum/rm_unit_type.dart';
 import '../../../core/enum/weight_unit_type.dart';
 import '../../../core/keys/form_keys.dart';
 import '../../../gen/assets.gen.dart';
+import '../../component/color/color_theme.dart';
 import '../../component/form/input_text_form.dart';
 
 class CreateItemBottomSheet extends StatelessWidget {
@@ -45,7 +46,11 @@ class CreateItemBottomSheet extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           child: Text(
                             '種目',
-                            style: Theme.of(context).textTheme.titleLarge,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: ColorTheme.primaryText,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                         Row(
@@ -78,8 +83,14 @@ class CreateItemBottomSheet extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  child:
-                      Text('重量', style: Theme.of(context).textTheme.titleLarge),
+                  child: Text(
+                    '重量',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: ColorTheme.primaryText,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ),
                 Row(
                   children: [
@@ -109,8 +120,14 @@ class CreateItemBottomSheet extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  child:
-                      Text('回数', style: Theme.of(context).textTheme.titleLarge),
+                  child: Text(
+                    '回数',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: ColorTheme.primaryText,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ),
                 Row(
                   children: [

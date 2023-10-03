@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/router/app_router.dart';
-import '../../gen/assets.gen.dart';
 import '../component/color/color_theme.dart';
 import '../component/text/middle_headline_text.dart';
 import 'components/create_item_bottom_sheet.dart';
+import 'components/home_header.dart';
 import 'home_page_view_model.dart';
 
 class HomePage extends HookConsumerWidget {
@@ -38,16 +38,7 @@ class HomePage extends HookConsumerWidget {
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 36),
-                    child: SizedBox(
-                      height: 160,
-                      width: MediaQuery.sizeOf(context).width,
-                      child: Assets.images.homeHeader.image(),
-                    ),
-                  ),
-                ),
+                const HomeHeader(),
                 state.recordList.isEmpty
                     ? SliverPadding(
                         padding: const EdgeInsets.symmetric(vertical: 16),

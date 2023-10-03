@@ -16,6 +16,10 @@ class $AssetsImagesGen {
   AssetGenImage get fitnessIcon =>
       const AssetGenImage('assets/images/fitness-icon.png');
 
+  /// File path: assets/images/gym-background.png
+  AssetGenImage get gymBackground =>
+      const AssetGenImage('assets/images/gym-background.png');
+
   /// File path: assets/images/home-icon-active.png
   AssetGenImage get homeIconActive =>
       const AssetGenImage('assets/images/home-icon-active.png');
@@ -39,6 +43,14 @@ class $AssetsImagesGen {
   AssetGenImage get listChoiceTooltip =>
       const AssetGenImage('assets/images/list_choice_tooltip.png');
 
+  /// File path: assets/images/my-video-icon.png
+  AssetGenImage get myVideoIcon =>
+      const AssetGenImage('assets/images/my-video-icon.png');
+
+  /// File path: assets/images/my-video.png
+  AssetGenImage get myVideo =>
+      const AssetGenImage('assets/images/my-video.png');
+
   /// File path: assets/images/setting-icon-active.png
   AssetGenImage get settingIconActive =>
       const AssetGenImage('assets/images/setting-icon-active.png');
@@ -58,12 +70,15 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         fitnessIcon,
+        gymBackground,
         homeIconActive,
         homeIcon,
         homeHeader,
         icon,
         kurogomaSplash,
         listChoiceTooltip,
+        myVideoIcon,
+        myVideo,
         settingIconActive,
         settingIcon,
         tipsCon,

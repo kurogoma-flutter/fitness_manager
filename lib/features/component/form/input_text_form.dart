@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../color.dart';
+import '../color/color_theme.dart';
 
 ///
 /// テキスト入力フォーム
@@ -32,7 +32,6 @@ class InputTextForm extends StatelessWidget {
     FocusNode? focusNode,
     String counterText = '',
     String? errorText,
-    Color fillColor = CustomColor.darkBlur,
   }) {
     return InputTextForm._(
       textFormKey: textFormKey,
@@ -46,7 +45,7 @@ class InputTextForm extends StatelessWidget {
       focusNode: focusNode,
       counterText: counterText,
       errorText: errorText,
-      fillColor: fillColor,
+      fillColor: ColorTheme.primaryCard,
     );
   }
 
@@ -61,7 +60,6 @@ class InputTextForm extends StatelessWidget {
     TextInputType? inputType,
     String? counterText,
     String? errorText,
-    Color fillColor = CustomColor.darkBlur,
   }) {
     return InputTextForm._(
       textFormKey: textFormKey,
@@ -74,7 +72,7 @@ class InputTextForm extends StatelessWidget {
       maxLength: maxLength,
       counterText: counterText,
       errorText: errorText,
-      fillColor: fillColor,
+      fillColor: ColorTheme.primaryCard,
     );
   }
 
@@ -92,7 +90,7 @@ class InputTextForm extends StatelessWidget {
     this.focusNode,
     this.counterText,
     this.errorText,
-    this.fillColor = CustomColor.darkBlur,
+    this.fillColor,
   }) : super(key: key);
 
   /// バリデーター動作設定
@@ -139,7 +137,7 @@ class InputTextForm extends StatelessWidget {
   final String? errorText;
 
   /// 入力フォーム背景色
-  final Color fillColor;
+  final Color? fillColor;
 
   @override
   Widget build(BuildContext context) {
@@ -151,8 +149,8 @@ class InputTextForm extends StatelessWidget {
       maxLines: maxLines,
       keyboardType: inputType,
       inputFormatters: inputFormatters,
-      style: const TextStyle(
-        color: CustomColor.white,
+      style: TextStyle(
+        color: ColorTheme.primaryWhite,
         fontSize: 14,
         fontWeight: FontWeight.w600,
       ),
@@ -163,16 +161,16 @@ class InputTextForm extends StatelessWidget {
             const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
         counterText: counterText,
         hintText: formHintText,
-        hintStyle: const TextStyle(
-          color: CustomColor.lightBlur,
+        hintStyle: TextStyle(
+          color: ColorTheme.primaryText,
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
         counterStyle: maxLines != 1
-            ? const TextStyle(
+            ? TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
-                color: CustomColor.white,
+                color: ColorTheme.primaryWhite,
               )
             : null,
         errorStyle: const TextStyle(
@@ -203,7 +201,7 @@ class InputTextForm extends StatelessWidget {
 
   BorderRadius get _borderRadius => BorderRadius.circular(8);
 
-  BorderSide get _formBorder => const BorderSide(color: CustomColor.lightBlur);
+  BorderSide get _formBorder => BorderSide(color: ColorTheme.primaryWhite);
 
-  BorderSide get _errorBorder => const BorderSide(color: CustomColor.red);
+  BorderSide get _errorBorder => BorderSide(color: ColorTheme.primaryActive);
 }
