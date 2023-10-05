@@ -1,4 +1,4 @@
-package com.example.fitness_records
+package app.kurogoma.fitness.record
 
 import io.flutter.embedding.android.FlutterActivity
 
