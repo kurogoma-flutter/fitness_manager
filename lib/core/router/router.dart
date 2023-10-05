@@ -1,10 +1,15 @@
 // ボトムナビゲーションを非表示にしたいルートパスを指定
 
+import '../../features/setting/pages/license_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/component/scaffold_with_bottom_navigation_bar.dart';
 import '../../features/home/home_page.dart';
+import '../../features/setting/pages/about_this_app_page.dart';
+import '../../features/setting/pages/app_legal_page.dart';
+import '../../features/setting/pages/inquiry_page.dart';
+import '../../features/setting/pages/privacy_policy_page.dart';
 import '../../features/setting/setting_page.dart';
 import '../../features/tips/tips_page.dart';
 
@@ -37,7 +42,35 @@ final router = GoRouter(
           routes: <RouteBase>[
             GoRoute(
               path: SettingPage.routePath,
+              name: SettingPage.routeName,
               builder: (context, state) => const SettingPage(),
+              routes: [
+                GoRoute(
+                  path: AboutThisAppPage.routePath,
+                  name: AboutThisAppPage.routeName,
+                  builder: (context, state) => const AboutThisAppPage(),
+                ),
+                GoRoute(
+                  path: AppLegalPage.routePath,
+                  name: AppLegalPage.routeName,
+                  builder: (context, state) => const AppLegalPage(),
+                ),
+                GoRoute(
+                  path: InquiryPage.routePath,
+                  name: InquiryPage.routeName,
+                  builder: (context, state) => const InquiryPage(),
+                ),
+                GoRoute(
+                  path: AppLicensePage.routePath,
+                  name: AppLicensePage.routeName,
+                  builder: (context, state) => const AppLicensePage(),
+                ),
+                GoRoute(
+                  path: PrivacyPolicyPage.routePath,
+                  name: PrivacyPolicyPage.routeName,
+                  builder: (context, state) => const PrivacyPolicyPage(),
+                ),
+              ],
             ),
           ],
         ),
