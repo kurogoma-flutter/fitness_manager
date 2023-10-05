@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
 import 'tips_page_view_model.dart';
 
@@ -45,50 +46,55 @@ class _TipsPageState extends ConsumerState<TipsPage> {
             ),
             itemCount: state.tipList.length,
             itemBuilder: (context, index) {
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                  color: ColorTheme.primaryCard,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  children: [
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: ColorTheme.secondaryCard,
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12),
-                        ),
-                      ),
-                      child: SizedBox(
-                        height: 120,
-                        width: double.infinity,
-                        child: ClipRRect(
+              return GestureDetector(
+                onTap: () {
+                  AppRouter().launchURL(state.tipList[index].linkUrl);
+                },
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: ColorTheme.primaryCard,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: ColorTheme.secondaryCard,
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(12),
                             topRight: Radius.circular(12),
                           ),
-                          child: Image.network(
-                            state.tipList[index].thumbnailUrl,
-                            fit: BoxFit.fitWidth,
+                        ),
+                        child: SizedBox(
+                          height: 120,
+                          width: double.infinity,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              topRight: Radius.circular(12),
+                            ),
+                            child: Image.network(
+                              state.tipList[index].thumbnailUrl,
+                              fit: BoxFit.fitWidth,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: Text(
-                        state.tipList[index].title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                        style: TextStyle(
-                          color: ColorTheme.primaryText,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w300,
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: Text(
+                          state.tipList[index].title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                          style: TextStyle(
+                            color: ColorTheme.primaryText,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

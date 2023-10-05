@@ -21,6 +21,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorTheme.primaryBackGround,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: ColorTheme.primaryBackGround,
         title: Text(
           '設定',

@@ -7,13 +7,21 @@ import '../../../gen/assets.gen.dart';
 import '../../component/color/color_theme.dart';
 import '../../component/form/input_text_form.dart';
 
-class CreateItemBottomSheet extends StatelessWidget {
+class CreateItemBottomSheet extends StatefulWidget {
   const CreateItemBottomSheet({
     super.key,
   });
 
   @override
+  State<CreateItemBottomSheet> createState() => _CreateItemBottomSheetState();
+}
+
+class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
+  @override
   Widget build(BuildContext context) {
+    var selectedWightType = WeightUnitType.kg;
+    var selectedRmType = RmUnitType.times;
+
     return Material(
       type: MaterialType.transparency,
       child: Container(
@@ -104,17 +112,35 @@ class CreateItemBottomSheet extends StatelessWidget {
                     ),
                     const SizedBox(width: 16),
                     DropdownButton(
+                      value: selectedWightType,
+                      style: TextStyle(
+                        color: ColorTheme.primaryText,
+                      ),
                       items: [
                         DropdownMenuItem(
                           value: WeightUnitType.kg,
-                          child: Text(WeightUnitType.kg.name),
+                          child: Text(
+                            WeightUnitType.kg.text,
+                            style: TextStyle(
+                              color: ColorTheme.primaryText,
+                            ),
+                          ),
                         ),
                         DropdownMenuItem(
                           value: WeightUnitType.lbs,
-                          child: Text(WeightUnitType.lbs.name),
+                          child: Text(
+                            WeightUnitType.lbs.text,
+                            style: TextStyle(
+                              color: ColorTheme.primaryText,
+                            ),
+                          ),
                         ),
                       ],
-                      onChanged: (value) {},
+                      onChanged: (WeightUnitType? value) {
+                        setState(() {
+                          selectedWightType = value ?? WeightUnitType.kg;
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -141,29 +167,62 @@ class CreateItemBottomSheet extends StatelessWidget {
                     ),
                     const SizedBox(width: 16),
                     DropdownButton(
+                      value: selectedRmType,
+                      style: TextStyle(
+                        color: ColorTheme.primaryText,
+                      ),
                       items: [
                         DropdownMenuItem(
                           value: RmUnitType.times,
-                          child: Text(RmUnitType.times.name),
+                          child: Text(
+                            RmUnitType.times.text,
+                            style: TextStyle(
+                              color: ColorTheme.primaryText,
+                            ),
+                          ),
                         ),
                         DropdownMenuItem(
                           value: RmUnitType.rm,
-                          child: Text(RmUnitType.rm.name),
+                          child: Text(
+                            RmUnitType.rm.text,
+                            style: TextStyle(
+                              color: ColorTheme.primaryText,
+                            ),
+                          ),
                         ),
                         DropdownMenuItem(
                           value: RmUnitType.set,
-                          child: Text(RmUnitType.set.name),
+                          child: Text(
+                            RmUnitType.set.text,
+                            style: TextStyle(
+                              color: ColorTheme.primaryText,
+                            ),
+                          ),
                         ),
                         DropdownMenuItem(
                           value: RmUnitType.minute,
-                          child: Text(RmUnitType.minute.name),
+                          child: Text(
+                            RmUnitType.minute.text,
+                            style: TextStyle(
+                              color: ColorTheme.primaryText,
+                            ),
+                          ),
                         ),
                         DropdownMenuItem(
                           value: RmUnitType.second,
-                          child: Text(RmUnitType.second.name),
+                          child: Text(
+                            RmUnitType.second.text,
+                            style: TextStyle(
+                              color: ColorTheme.primaryText,
+                            ),
+                          ),
                         ),
                       ],
-                      onChanged: (value) {},
+                      onChanged: (RmUnitType? value) {
+                        setState(() {
+                          selectedRmType = value ?? RmUnitType.times;
+                        });
+                      },
                     ),
                   ],
                 ),

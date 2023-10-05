@@ -15,6 +15,7 @@ class AppLicensePage extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: ColorTheme.primaryBackGround,
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, size: 28),
           onPressed: () {
