@@ -153,7 +153,7 @@ class _DatePicker extends StatelessWidget {
               selectingDateTime = newDate;
             },
           ),
-        )
+        ),
       ],
     );
   }

@@ -25,7 +25,7 @@ class CreateItemBottomSheet extends StatelessWidget {
           right: 16,
         ),
         decoration: const BoxDecoration(
-          color: Color.fromARGB(234, 0, 0, 0),
+          color: Color(0xEA000000),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
@@ -78,7 +78,7 @@ class CreateItemBottomSheet extends StatelessWidget {
                         height: 50,
                         child: Assets.images.listChoiceTooltip.image(),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Padding(
@@ -169,7 +169,7 @@ class CreateItemBottomSheet extends StatelessWidget {
                 ),
                 SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.5,
-                )
+                ),
               ],
             ),
           ),

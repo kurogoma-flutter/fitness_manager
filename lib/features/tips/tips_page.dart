@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../component/color/color_theme.dart';
@@ -17,17 +16,20 @@ class TipsPage extends StatefulHookConsumerWidget {
 
 class _TipsPageState extends ConsumerState<TipsPage> {
   @override
-  Widget build(BuildContext context) {
-    useEffect(
-      () {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ref.read(tipPageViewModelProvider.notifier).fetchTipList();
-        });
-        return null;
-      },
-      [],
-    );
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(tipPageViewModelProvider.notifier).fetchTipList();
+    });
+    super.initState();
+  }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(tipPageViewModelProvider);
 
     return Scaffold(

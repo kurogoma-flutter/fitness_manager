@@ -74,7 +74,7 @@ class ResetDataDialog extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

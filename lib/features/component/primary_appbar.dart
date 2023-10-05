@@ -46,7 +46,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               secondIcon ?? const SizedBox.shrink(),
             ],
-          )
+          ),
         ],
       ),
       centerTitle: true,

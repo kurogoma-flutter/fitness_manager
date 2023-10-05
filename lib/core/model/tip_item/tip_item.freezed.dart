@@ -14,13 +14,22 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+TipItem _$TipItemFromJson(Map<String, dynamic> json) {
+  return _TipItem.fromJson(json);
+}
+
 /// @nodoc
 mixin _$TipItem {
+  @JsonKey(name: 'id', defaultValue: '')
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'thumbnailUrl')
   String get thumbnailUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'title')
   String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: 'linkUrl')
   String get linkUrl => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TipItemCopyWith<TipItem> get copyWith => throw _privateConstructorUsedError;
 }
@@ -30,7 +39,11 @@ abstract class $TipItemCopyWith<$Res> {
   factory $TipItemCopyWith(TipItem value, $Res Function(TipItem) then) =
       _$TipItemCopyWithImpl<$Res, TipItem>;
   @useResult
-  $Res call({String id, String thumbnailUrl, String title, String linkUrl});
+  $Res call(
+      {@JsonKey(name: 'id', defaultValue: '') String id,
+      @JsonKey(name: 'thumbnailUrl') String thumbnailUrl,
+      @JsonKey(name: 'title') String title,
+      @JsonKey(name: 'linkUrl') String linkUrl});
 }
 
 /// @nodoc
@@ -79,7 +92,11 @@ abstract class _$$_TipItemCopyWith<$Res> implements $TipItemCopyWith<$Res> {
       __$$_TipItemCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String thumbnailUrl, String title, String linkUrl});
+  $Res call(
+      {@JsonKey(name: 'id', defaultValue: '') String id,
+      @JsonKey(name: 'thumbnailUrl') String thumbnailUrl,
+      @JsonKey(name: 'title') String title,
+      @JsonKey(name: 'linkUrl') String linkUrl});
 }
 
 /// @nodoc
@@ -119,21 +136,28 @@ class __$$_TipItemCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_TipItem implements _TipItem {
   const _$_TipItem(
-      {required this.id,
-      required this.thumbnailUrl,
-      required this.title,
-      required this.linkUrl});
+      {@JsonKey(name: 'id', defaultValue: '') required this.id,
+      @JsonKey(name: 'thumbnailUrl') required this.thumbnailUrl,
+      @JsonKey(name: 'title') required this.title,
+      @JsonKey(name: 'linkUrl') required this.linkUrl});
+
+  factory _$_TipItem.fromJson(Map<String, dynamic> json) =>
+      _$$_TipItemFromJson(json);
 
   @override
+  @JsonKey(name: 'id', defaultValue: '')
   final String id;
   @override
+  @JsonKey(name: 'thumbnailUrl')
   final String thumbnailUrl;
   @override
+  @JsonKey(name: 'title')
   final String title;
   @override
+  @JsonKey(name: 'linkUrl')
   final String linkUrl;
 
   @override
@@ -153,6 +177,7 @@ class _$_TipItem implements _TipItem {
             (identical(other.linkUrl, linkUrl) || other.linkUrl == linkUrl));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, thumbnailUrl, title, linkUrl);
@@ -162,22 +187,35 @@ class _$_TipItem implements _TipItem {
   @pragma('vm:prefer-inline')
   _$$_TipItemCopyWith<_$_TipItem> get copyWith =>
       __$$_TipItemCopyWithImpl<_$_TipItem>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_TipItemToJson(
+      this,
+    );
+  }
 }
 
 abstract class _TipItem implements TipItem {
   const factory _TipItem(
-      {required final String id,
-      required final String thumbnailUrl,
-      required final String title,
-      required final String linkUrl}) = _$_TipItem;
+      {@JsonKey(name: 'id', defaultValue: '') required final String id,
+      @JsonKey(name: 'thumbnailUrl') required final String thumbnailUrl,
+      @JsonKey(name: 'title') required final String title,
+      @JsonKey(name: 'linkUrl') required final String linkUrl}) = _$_TipItem;
+
+  factory _TipItem.fromJson(Map<String, dynamic> json) = _$_TipItem.fromJson;
 
   @override
+  @JsonKey(name: 'id', defaultValue: '')
   String get id;
   @override
+  @JsonKey(name: 'thumbnailUrl')
   String get thumbnailUrl;
   @override
+  @JsonKey(name: 'title')
   String get title;
   @override
+  @JsonKey(name: 'linkUrl')
   String get linkUrl;
   @override
   @JsonKey(ignore: true)
