@@ -38,7 +38,7 @@ class SettingListTile extends StatelessWidget {
                 Icon(
                   Icons.arrow_forward_ios,
                   color: ColorTheme.primaryIcon,
-                )
+                ),
               ],
             ),
             Divider(
