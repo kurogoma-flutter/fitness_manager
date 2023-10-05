@@ -1,6 +1,6 @@
 import '../core/model/tip_item/tip_item.dart';
 
-final List<TipItem> dummyTipList = [
+final List<TipItem> localTipList = [
   const TipItem(
     id: '1',
     thumbnailUrl: 'http://img.youtube.com/vi/No9m0A2tzLw/mqdefault.jpg',

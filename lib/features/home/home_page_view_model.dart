@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/model/isar/record/record_collection_data_source.dart';
-import '../../demo/dummy_record_list.dart';
+import '../../local/dummy_record_list.dart';
 import 'home_page_state.dart';
 
 final homePageViewModelProvider =
