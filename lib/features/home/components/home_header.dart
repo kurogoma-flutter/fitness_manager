@@ -12,12 +12,12 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 36),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Stack(
           alignment: Alignment.center,
           children: [
             SizedBox(
-              height: 160,
+              height: 120,
               width: MediaQuery.sizeOf(context).width,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),

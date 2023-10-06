@@ -17,6 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomePageState {
   List<Record> get recordList => throw _privateConstructorUsedError;
+  List<Map<DateTime, int>> get heatmapData =>
+      throw _privateConstructorUsedError;
+  int get selectedYear => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomePageStateCopyWith<HomePageState> get copyWith =>
@@ -29,7 +32,10 @@ abstract class $HomePageStateCopyWith<$Res> {
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res, HomePageState>;
   @useResult
-  $Res call({List<Record> recordList});
+  $Res call(
+      {List<Record> recordList,
+      List<Map<DateTime, int>> heatmapData,
+      int selectedYear});
 }
 
 /// @nodoc
@@ -46,12 +52,22 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
   @override
   $Res call({
     Object? recordList = null,
+    Object? heatmapData = null,
+    Object? selectedYear = null,
   }) {
     return _then(_value.copyWith(
       recordList: null == recordList
           ? _value.recordList
           : recordList // ignore: cast_nullable_to_non_nullable
               as List<Record>,
+      heatmapData: null == heatmapData
+          ? _value.heatmapData
+          : heatmapData // ignore: cast_nullable_to_non_nullable
+              as List<Map<DateTime, int>>,
+      selectedYear: null == selectedYear
+          ? _value.selectedYear
+          : selectedYear // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -64,7 +80,10 @@ abstract class _$$_HomePageStateCopyWith<$Res>
       __$$_HomePageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Record> recordList});
+  $Res call(
+      {List<Record> recordList,
+      List<Map<DateTime, int>> heatmapData,
+      int selectedYear});
 }
 
 /// @nodoc
@@ -79,12 +98,22 @@ class __$$_HomePageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? recordList = null,
+    Object? heatmapData = null,
+    Object? selectedYear = null,
   }) {
     return _then(_$_HomePageState(
       recordList: null == recordList
           ? _value._recordList
           : recordList // ignore: cast_nullable_to_non_nullable
               as List<Record>,
+      heatmapData: null == heatmapData
+          ? _value._heatmapData
+          : heatmapData // ignore: cast_nullable_to_non_nullable
+              as List<Map<DateTime, int>>,
+      selectedYear: null == selectedYear
+          ? _value.selectedYear
+          : selectedYear // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -92,8 +121,12 @@ class __$$_HomePageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_HomePageState implements _HomePageState {
-  const _$_HomePageState({final List<Record> recordList = const []})
-      : _recordList = recordList;
+  const _$_HomePageState(
+      {final List<Record> recordList = const [],
+      final List<Map<DateTime, int>> heatmapData = const [],
+      this.selectedYear = 2023})
+      : _recordList = recordList,
+        _heatmapData = heatmapData;
 
   final List<Record> _recordList;
   @override
@@ -104,9 +137,22 @@ class _$_HomePageState implements _HomePageState {
     return EqualUnmodifiableListView(_recordList);
   }
 
+  final List<Map<DateTime, int>> _heatmapData;
+  @override
+  @JsonKey()
+  List<Map<DateTime, int>> get heatmapData {
+    if (_heatmapData is EqualUnmodifiableListView) return _heatmapData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_heatmapData);
+  }
+
+  @override
+  @JsonKey()
+  final int selectedYear;
+
   @override
   String toString() {
-    return 'HomePageState(recordList: $recordList)';
+    return 'HomePageState(recordList: $recordList, heatmapData: $heatmapData, selectedYear: $selectedYear)';
   }
 
   @override
@@ -115,12 +161,19 @@ class _$_HomePageState implements _HomePageState {
         (other.runtimeType == runtimeType &&
             other is _$_HomePageState &&
             const DeepCollectionEquality()
-                .equals(other._recordList, _recordList));
+                .equals(other._recordList, _recordList) &&
+            const DeepCollectionEquality()
+                .equals(other._heatmapData, _heatmapData) &&
+            (identical(other.selectedYear, selectedYear) ||
+                other.selectedYear == selectedYear));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_recordList));
+      runtimeType,
+      const DeepCollectionEquality().hash(_recordList),
+      const DeepCollectionEquality().hash(_heatmapData),
+      selectedYear);
 
   @JsonKey(ignore: true)
   @override
@@ -130,11 +183,17 @@ class _$_HomePageState implements _HomePageState {
 }
 
 abstract class _HomePageState implements HomePageState {
-  const factory _HomePageState({final List<Record> recordList}) =
-      _$_HomePageState;
+  const factory _HomePageState(
+      {final List<Record> recordList,
+      final List<Map<DateTime, int>> heatmapData,
+      final int selectedYear}) = _$_HomePageState;
 
   @override
   List<Record> get recordList;
+  @override
+  List<Map<DateTime, int>> get heatmapData;
+  @override
+  int get selectedYear;
   @override
   @JsonKey(ignore: true)
   _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>

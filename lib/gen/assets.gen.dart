@@ -9,12 +9,34 @@
 
 import 'package:flutter/widgets.dart';
 
+class $EnvGen {
+  const $EnvGen();
+
+  /// File path: env/.env.dev
+  String get env => 'env/.env.dev';
+
+  /// List of all assets
+  List<String> get values => [env];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/fitness-icon.png
-  AssetGenImage get fitnessIcon =>
-      const AssetGenImage('assets/images/fitness-icon.png');
+  /// File path: assets/images/android-bg.png
+  AssetGenImage get androidBg =>
+      const AssetGenImage('assets/images/android-bg.png');
+
+  /// File path: assets/images/fitness-record-android.png
+  AssetGenImage get fitnessRecordAndroid =>
+      const AssetGenImage('assets/images/fitness-record-android.png');
+
+  /// File path: assets/images/fitness-record-icon.png
+  AssetGenImage get fitnessRecordIcon =>
+      const AssetGenImage('assets/images/fitness-record-icon.png');
+
+  /// File path: assets/images/fitness-record.png
+  AssetGenImage get fitnessRecord =>
+      const AssetGenImage('assets/images/fitness-record.png');
 
   /// File path: assets/images/gym-background.png
   AssetGenImage get gymBackground =>
@@ -28,13 +50,6 @@ class $AssetsImagesGen {
   AssetGenImage get homeIcon =>
       const AssetGenImage('assets/images/home-icon.png');
 
-  /// File path: assets/images/home_header.png
-  AssetGenImage get homeHeader =>
-      const AssetGenImage('assets/images/home_header.png');
-
-  /// File path: assets/images/icon.png
-  AssetGenImage get icon => const AssetGenImage('assets/images/icon.png');
-
   /// File path: assets/images/kurogoma-splash.png
   AssetGenImage get kurogomaSplash =>
       const AssetGenImage('assets/images/kurogoma-splash.png');
@@ -47,9 +62,9 @@ class $AssetsImagesGen {
   AssetGenImage get myVideoIcon =>
       const AssetGenImage('assets/images/my-video-icon.png');
 
-  /// File path: assets/images/my-video.png
-  AssetGenImage get myVideo =>
-      const AssetGenImage('assets/images/my-video.png');
+  /// File path: assets/images/record-fitness.png
+  AssetGenImage get recordFitness =>
+      const AssetGenImage('assets/images/record-fitness.png');
 
   /// File path: assets/images/setting-icon-active.png
   AssetGenImage get settingIconActive =>
@@ -69,16 +84,17 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        fitnessIcon,
+        androidBg,
+        fitnessRecordAndroid,
+        fitnessRecordIcon,
+        fitnessRecord,
         gymBackground,
         homeIconActive,
         homeIcon,
-        homeHeader,
-        icon,
         kurogomaSplash,
         listChoiceTooltip,
         myVideoIcon,
-        myVideo,
+        recordFitness,
         settingIconActive,
         settingIcon,
         tipsCon,
@@ -90,6 +106,7 @@ class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $EnvGen env = $EnvGen();
 }
 
 class AssetGenImage {

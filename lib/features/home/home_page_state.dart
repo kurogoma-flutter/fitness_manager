@@ -8,5 +8,7 @@ part 'home_page_state.freezed.dart';
 class HomePageState with _$HomePageState {
   const factory HomePageState({
     @Default([]) List<Record> recordList,
+    @Default([]) List<Map<DateTime, int>> heatmapData,
+    @Default(2023) int selectedYear,
   }) = _HomePageState;
 }
