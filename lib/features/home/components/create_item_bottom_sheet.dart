@@ -17,11 +17,10 @@ class CreateItemBottomSheet extends StatefulWidget {
 }
 
 class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
+  WeightUnitType selectedWightType = WeightUnitType.kg;
+  RmUnitType selectedRmType = RmUnitType.times;
   @override
   Widget build(BuildContext context) {
-    var selectedWightType = WeightUnitType.kg;
-    var selectedRmType = RmUnitType.times;
-
     return Material(
       type: MaterialType.transparency,
       child: Container(
@@ -111,13 +110,15 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    DropdownButton(
+                    DropdownButton<WeightUnitType>(
                       value: selectedWightType,
+                      dropdownColor: ColorTheme.primaryBackGround,
+                      focusColor: Colors.transparent,
                       style: TextStyle(
                         color: ColorTheme.primaryText,
                       ),
                       items: [
-                        DropdownMenuItem(
+                        DropdownMenuItem<WeightUnitType>(
                           value: WeightUnitType.kg,
                           child: Text(
                             WeightUnitType.kg.text,
@@ -126,7 +127,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                             ),
                           ),
                         ),
-                        DropdownMenuItem(
+                        DropdownMenuItem<WeightUnitType>(
                           value: WeightUnitType.lbs,
                           child: Text(
                             WeightUnitType.lbs.text,
@@ -166,13 +167,15 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    DropdownButton(
+                    DropdownButton<RmUnitType>(
                       value: selectedRmType,
+                      dropdownColor: ColorTheme.primaryBackGround,
+                      focusColor: Colors.transparent,
                       style: TextStyle(
                         color: ColorTheme.primaryText,
                       ),
                       items: [
-                        DropdownMenuItem(
+                        DropdownMenuItem<RmUnitType>(
                           value: RmUnitType.times,
                           child: Text(
                             RmUnitType.times.text,
@@ -181,7 +184,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                             ),
                           ),
                         ),
-                        DropdownMenuItem(
+                        DropdownMenuItem<RmUnitType>(
                           value: RmUnitType.rm,
                           child: Text(
                             RmUnitType.rm.text,
@@ -190,7 +193,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                             ),
                           ),
                         ),
-                        DropdownMenuItem(
+                        DropdownMenuItem<RmUnitType>(
                           value: RmUnitType.set,
                           child: Text(
                             RmUnitType.set.text,
@@ -199,7 +202,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                             ),
                           ),
                         ),
-                        DropdownMenuItem(
+                        DropdownMenuItem<RmUnitType>(
                           value: RmUnitType.minute,
                           child: Text(
                             RmUnitType.minute.text,
@@ -208,7 +211,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                             ),
                           ),
                         ),
-                        DropdownMenuItem(
+                        DropdownMenuItem<RmUnitType>(
                           value: RmUnitType.second,
                           child: Text(
                             RmUnitType.second.text,
@@ -219,6 +222,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                         ),
                       ],
                       onChanged: (RmUnitType? value) {
+                        print(value);
                         setState(() {
                           selectedRmType = value ?? RmUnitType.times;
                         });

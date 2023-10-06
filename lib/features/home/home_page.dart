@@ -31,87 +31,83 @@ class HomePage extends HookConsumerWidget {
     final state = ref.watch(homePageViewModelProvider);
     return Scaffold(
       backgroundColor: ColorTheme.primaryBackGround,
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
-            child: CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                const HomeHeader(),
-                state.recordList.isEmpty
-                    ? SliverPadding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        sliver: SliverToBoxAdapter(
-                          child: Center(
-                            child: MiddleHeadlineText(
-                              'レコードがありません',
-                              textColor: ColorTheme.primaryWhite,
-                            ),
-                          ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            const HomeHeader(),
+            state.recordList.isEmpty
+                ? SliverPadding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    sliver: SliverToBoxAdapter(
+                      child: Center(
+                        child: MiddleHeadlineText(
+                          'レコードがありません',
+                          textColor: ColorTheme.primaryWhite,
                         ),
-                      )
-                    : SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4),
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: ColorTheme.primaryCard,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 12,
-                                    top: 16,
-                                    bottom: 16,
-                                  ),
-                                  child: Text(
-                                    '${state.recordList[index].category} ${state.recordList[index].load}${state.recordList[index].weightUnitType.text} x ${state.recordList[index].time}${state.recordList[index].rmUnitType.text}',
-                                    style: TextStyle(
-                                      color: ColorTheme.primaryText,
-                                      fontSize: 15,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          childCount: state.recordList.length,
-                        ),
-                      ),
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  sliver: SliverToBoxAdapter(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await AppRouter().showBottomSheet(
-                          context,
-                          const CreateItemBottomSheet(),
-                        );
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          ColorTheme.primaryActive,
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.black,
                       ),
                     ),
+                  )
+                : SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: ColorTheme.primaryCard,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 12,
+                                top: 16,
+                                bottom: 16,
+                              ),
+                              child: Text(
+                                '${state.recordList[index].category} ${state.recordList[index].load}${state.recordList[index].weightUnitType.text} x ${state.recordList[index].time}${state.recordList[index].rmUnitType.text}',
+                                style: TextStyle(
+                                  color: ColorTheme.primaryText,
+                                  fontSize: 15,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: state.recordList.length,
+                    ),
+                  ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              sliver: SliverToBoxAdapter(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await AppRouter().showBottomSheet(
+                      context,
+                      const CreateItemBottomSheet(),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      ColorTheme.primaryActive,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.black,
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: 200),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 200),
+            ),
+          ],
+        ),
       ),
     );
   }

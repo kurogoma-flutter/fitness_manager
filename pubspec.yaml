@@ -72,14 +72,14 @@ flutter:
       fonts:
         - asset: assets/fonts/LINE_Seed_JP/App/OTF/LINESeedJP_A_OTF_Rg.otf
 
-# flutter pub run flutter_launcher_icons
+# flutter pub run flutter_launcher_icons:main
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/app-icon.png"
+  image_path: "assets/images/fitness-record.png"
   remove_alpha_ios: true
   adaptive_icon_background: "assets/images/android-bg.png"
-  adaptive_icon_foreground: "assets/images/app-icon.png"
+  adaptive_icon_foreground: "assets/images/fitness-record-android.png"
 
 flutter_native_splash:
   image: "assets/images/kurogoma-splash.png"
