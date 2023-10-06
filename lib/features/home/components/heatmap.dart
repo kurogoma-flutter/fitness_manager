@@ -31,92 +31,86 @@ class Heatmap extends StatefulWidget {
 
 class _HeatmapState extends State<Heatmap> {
   DateTime? _selectedDate;
-  late OverlayEntry _overlayEntry;
+  OverlayEntry? _overlayEntry;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: GestureDetector(
-        onLongPress: () {
-          // PopupMenuを表示
-          _showPopupMenu(context);
-        },
-        onLongPressUp: () {
-          if (_overlayEntry.mounted) {
-            _overlayEntry.remove();
-          }
-        },
+        onLongPress: _showPopupMenu,
+        onLongPressUp: _hidePopupMenu,
         child: SizedBox(
-          height: (widget.cellSize * 7),
+          height: widget.cellSize * 7,
           child: CustomPaint(
             painter: HeatmapPainter(
               data: widget.data,
               colorSet: widget.colorSet,
               cellSize: widget.cellSize,
-              targetYear: widget.targetYear,
-              onTapCell: (date) {
-                setState(() {
-                  _selectedDate = date;
-                });
-              },
+              onTapCell: (date) => setState(() => _selectedDate = date),
             ),
-            size: Size(widget.cellSize * (365 ~/ 7), (widget.cellSize * 7)),
+            size: Size(widget.cellSize * (365 ~/ 7), widget.cellSize * 7),
           ),
         ),
       ),
     );
   }
 
-  void _showPopupMenu(BuildContext context) {
+  void _showPopupMenu() {
     if (_selectedDate == null) return;
 
     final overlay = Overlay.of(context);
-    final overlayPosition = OverlayEntry(
+    _overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: 140, // 位置は適切に調整してください。
-        left: MediaQuery.sizeOf(context).width * 0.4, // 位置は適切に調整してください。
+        top: 140, // Adjust as needed
+        left: MediaQuery.of(context).size.width * 0.4, // Adjust as needed
         child: Material(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             decoration: BoxDecoration(
-              color: ColorTheme.secondaryBackGround,
+              color: Colors.grey[200], // Adjust color as per your theme
               borderRadius: BorderRadius.circular(4),
               boxShadow: const [
-                BoxShadow(
-                  offset: Offset(0, 2),
-                  blurRadius: 6,
-                ),
+                BoxShadow(offset: Offset(0, 2), blurRadius: 6),
               ],
             ),
             child: Center(
               child: Text(
-                _selectedDate!.toLocal().toIso8601String().split('T').first,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: ColorTheme.primaryText,
-                ),
+                '${_getScoreForDate(_selectedDate!)} tracks ${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}',
+                style: const TextStyle(fontSize: 12), // Adjust style as needed
               ),
             ),
           ),
         ),
       ),
     );
+    overlay.insert(_overlayEntry!);
+  }
 
-    overlay.insert(overlayPosition);
-    _overlayEntry = overlayPosition;
+  void _hidePopupMenu() {
+    _overlayEntry?.remove();
+  }
+
+  int _getScoreForDate(DateTime date) {
+    final mapData = widget.data.firstWhere(
+      (map) => map.containsKey(date),
+      orElse: () => {},
+    );
+
+    if (mapData.isEmpty) {
+      return 0;
+    }
+    return mapData[date] ?? 0;
+  }
+}
+
+extension FirstOrElseExtension<T> on Iterable<T> {
+  T firstOrElse(T Function() orElse) {
+    return isEmpty ? orElse() : first;
   }
 }
 
 /// `HeatmapPainter` クラスは、ヒートマップのカスタム描画を行います。
-///
-/// - [data]: ヒートマップのデータ。
-/// - [colorSet]: 値ごとの色セット。
-/// - [cellSize]: 各セルのサイズ。
-/// - [onTapCell]: セルがタップされたときのコールバック。
-/// - [defaultColor]: デフォルトのセル色。
-/// - [targetYear]: ヒートマップの対象年。
-///
 class HeatmapPainter extends CustomPainter {
   HeatmapPainter({
     required this.data,
@@ -136,10 +130,8 @@ class HeatmapPainter extends CustomPainter {
 
   @override
   bool? hitTest(Offset position) {
-    // セルの位置を計算
     final week = (position.dx ~/ cellSize).toInt();
     final day = (position.dy ~/ cellSize).toInt();
-
     final targetYearNumber = targetYear ?? DateTime.now().year;
 
     final selectedDate =
@@ -164,12 +156,9 @@ class HeatmapPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const borderThickness = 0.5;
-
     final targetYearNumber = targetYear ?? DateTime.now().year;
-
     final currentYearStartDate = DateTime(targetYearNumber, 1, 1);
 
-    // Filter data for the target year
     final filteredData = data
         .where((item) => item.keys.any((key) => key.year == targetYearNumber))
         .toList();
@@ -181,7 +170,6 @@ class HeatmapPainter extends CustomPainter {
 
         final currentCellDate =
             currentYearStartDate.add(Duration(days: (week * 7) + day));
-
         final matchingData = filteredData.firstWhere(
           (item) =>
               item.keys.any((key) => key.isAtSameMomentAs(currentCellDate)),
