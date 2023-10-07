@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/enum/rm_unit_type.dart';
 import '../../../core/enum/weight_unit_type.dart';
@@ -6,43 +7,42 @@ import '../../../core/keys/form_keys.dart';
 import '../../../gen/assets.gen.dart';
 import '../../component/color/color_theme.dart';
 import '../../component/form/input_text_form.dart';
+import '../home_page_view_model.dart';
 
-class CreateItemBottomSheet extends StatefulWidget {
-  const CreateItemBottomSheet({
-    super.key,
-  });
+class CreateItemBottomSheet extends ConsumerStatefulWidget {
+  const CreateItemBottomSheet({super.key});
 
   @override
-  State<CreateItemBottomSheet> createState() => _CreateItemBottomSheetState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CreateItemBottomSheetState();
 }
 
-class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
+class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
   WeightUnitType selectedWightType = WeightUnitType.kg;
   RmUnitType selectedRmType = RmUnitType.times;
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: Container(
-        height: MediaQuery.sizeOf(context).height * 0.6,
-        width: MediaQuery.sizeOf(context).width,
-        padding: const EdgeInsets.only(
-          top: 24,
-          left: 16,
-          right: 16,
-        ),
-        decoration: const BoxDecoration(
-          color: Color(0xEA000000),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Container(
+          height: MediaQuery.sizeOf(context).height * 0.6,
+          width: MediaQuery.sizeOf(context).width,
+          padding: const EdgeInsets.only(
+            top: 24,
+            left: 16,
+            right: 16,
           ),
-        ),
-        child: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          decoration: const BoxDecoration(
+            color: Color(0xEA000000),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+          ),
+          child: Form(
+            key: formKey,
+            child: ListView(
               children: [
                 Stack(
                   children: [
@@ -54,7 +54,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                           child: Text(
                             '種目',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               color: ColorTheme.primaryText,
                               fontWeight: FontWeight.w400,
                             ),
@@ -66,7 +66,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                               width: MediaQuery.sizeOf(context).width * 0.75,
                               child: InputTextForm(
                                 textFormKey: textFormKey,
-                                validator: (text) => '',
+                                validator: (text) => null,
                               ),
                             ),
                             const SizedBox(width: 16),
@@ -93,7 +93,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                   child: Text(
                     '重量',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: ColorTheme.primaryText,
                       fontWeight: FontWeight.w400,
                     ),
@@ -105,15 +105,14 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                       width: 150,
                       child: InputTextForm(
                         textFormKey: textFormKey2,
-                        validator: (text) => '',
+                        validator: (text) => null,
                         inputType: TextInputType.number,
                       ),
                     ),
                     const SizedBox(width: 16),
                     DropdownButton<WeightUnitType>(
                       value: selectedWightType,
-                      dropdownColor: ColorTheme.primaryBackGround,
-                      focusColor: Colors.transparent,
+                      dropdownColor: ColorTheme.primaryCard,
                       style: TextStyle(
                         color: ColorTheme.primaryText,
                       ),
@@ -150,7 +149,7 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                   child: Text(
                     '回数',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: ColorTheme.primaryText,
                       fontWeight: FontWeight.w400,
                     ),
@@ -162,15 +161,14 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                       width: 150,
                       child: InputTextForm(
                         textFormKey: textFormKey3,
-                        validator: (text) => '',
+                        validator: (text) => null,
                         inputType: TextInputType.number,
                       ),
                     ),
                     const SizedBox(width: 16),
                     DropdownButton<RmUnitType>(
                       value: selectedRmType,
-                      dropdownColor: ColorTheme.primaryBackGround,
-                      focusColor: Colors.transparent,
+                      dropdownColor: ColorTheme.primaryCard,
                       style: TextStyle(
                         color: ColorTheme.primaryText,
                       ),
@@ -229,14 +227,62 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    if (textFormKey.currentState!.value == null ||
+                        textFormKey2.currentState!.value == null ||
+                        textFormKey3.currentState!.value == null) {
+                      return;
+                    }
+                    ref.read(homePageViewModelProvider.notifier).addNewRecord(
+                          category: textFormKey.currentState!.value!,
+                          load: double.parse(
+                            double.parse(
+                              textFormKey2.currentState!.value!,
+                            ).toStringAsFixed(1),
+                          ),
+                          weightUnitType: selectedWightType,
+                          time: textFormKey3.currentState!.value!,
+                          rmUnitType: selectedRmType,
+                        );
+                    if (!mounted) {
+                      return;
+                    }
+                    Navigator.pop(context);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      ColorTheme.secondaryButton,
+                    ),
+                  ),
+                  child: Text(
+                    '登録する',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: ColorTheme.secondaryText,
+                    ),
+                  ),
+                ),
                 SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.5,
+                  height: MediaQuery.sizeOf(context).height * 0.3,
                 ),
               ],
             ),
           ),
         ),
-      ),
+        Positioned(
+          top: 16,
+          child: Container(
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: ColorTheme.primaryIcon,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

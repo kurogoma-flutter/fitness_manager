@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'myTrack/my_track_collection.dart';
 import 'mylist/mylist_collection.dart';
 import 'record/record_collection.dart';
 
@@ -20,6 +21,7 @@ class IsarInstance {
       [
         RecordSchema,
         MyListSchema,
+        MyTrackSchema,
       ],
       directory: kIsWeb ? '' : dir.path,
       inspector: true,
@@ -30,4 +32,5 @@ class IsarInstance {
 
   IsarCollection<Record> get records => _isar!.collection<Record>();
   IsarCollection<MyList> get mylist => _isar!.collection<MyList>();
+  IsarCollection<MyTrack> get myTrack => _isar!.collection<MyTrack>();
 }

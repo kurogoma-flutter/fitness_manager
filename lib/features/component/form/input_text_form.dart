@@ -45,7 +45,7 @@ class InputTextForm extends StatelessWidget {
       focusNode: focusNode,
       counterText: counterText,
       errorText: errorText,
-      fillColor: ColorTheme.primaryCard,
+      fillColor: ColorTheme.secondaryBackGround,
     );
   }
 
@@ -170,7 +170,7 @@ class InputTextForm extends StatelessWidget {
             ? TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
-                color: ColorTheme.primaryWhite,
+                color: ColorTheme.primaryText,
               )
             : null,
         errorStyle: const TextStyle(
@@ -201,7 +201,7 @@ class InputTextForm extends StatelessWidget {
 
   BorderRadius get _borderRadius => BorderRadius.circular(8);
 
-  BorderSide get _formBorder => BorderSide(color: ColorTheme.primaryWhite);
+  BorderSide get _formBorder => BorderSide(color: ColorTheme.primaryIcon);
 
   BorderSide get _errorBorder => BorderSide(color: ColorTheme.primaryActive);
 }

@@ -16,9 +16,13 @@ class ColorTheme {
   static Color secondaryCard = const Color(0xFF4C4B50);
   static Color primaryActive = const Color(0xFFfe6952);
   static Color primaryText = const Color(0xFFB9B9BD);
+  static Color secondaryText = const Color(0xFF424146);
+
   static Color primaryIcon = const Color(0xFF8D8A9C);
   static Color secondaryIcon = const Color(0xFFE1E2E3);
   static Color primaryActiveIcon = const Color(0xFF1aac92);
+
+  static Color secondaryButton = const Color(0xFFE1E2E3);
 
   static Color heatmap1 = const Color(0xFFfe6952);
   static Color heatmap2 = const Color(0xFFfd866d);

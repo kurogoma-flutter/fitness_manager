@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -7,7 +6,6 @@ import '../../core/logger/logger.dart';
 import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
 import '../component/text/middle_headline_text.dart';
-import '../component/text/tiny_headline_text.dart';
 import 'components/create_item_bottom_sheet.dart';
 import 'components/heatmap.dart';
 import 'components/home_header.dart';
@@ -34,7 +32,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void didChangeDependencies() {
     Future(() async {
       final notifier = ref.read(homePageViewModelProvider.notifier);
-      await notifier.fetchDummyRecordList();
+      await notifier.fetchRecordList();
       notifier.setTargetYear(null);
       await notifier.fetchHeatmapData();
     });
