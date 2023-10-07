@@ -16,13 +16,21 @@ class MyFitnessPage extends StatefulHookConsumerWidget {
   const MyFitnessPage({super.key});
 
   static const String routeName = 'my_fitness';
-  static const String routePath = '/my_fitness';
+  static const String routePath = 'my_fitness';
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MyFitnessPageState();
 }
 
 class _MyFitnessPageState extends ConsumerState<MyFitnessPage> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(myFitnessViewModelProvider.notifier).fetchMyFitnessList();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(myFitnessViewModelProvider);
@@ -96,6 +104,7 @@ class _MyFitnessPageState extends ConsumerState<MyFitnessPage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 16),
               Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

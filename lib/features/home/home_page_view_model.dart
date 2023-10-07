@@ -19,14 +19,23 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
   final _dataSource = RecordCollectionDataSource();
 
   Future<void> fetchRecordList() async {
+    state = state.copyWith(loading: true);
+    await Future.delayed(const Duration(milliseconds: 1500));
     final recordList = await _dataSource.fetchRecordList();
-    state = state.copyWith(recordList: recordList);
+    state = state.copyWith(
+      recordList: recordList,
+      loading: false,
+    );
   }
 
   Future<void> fetchDummyRecordList() async {
-    debugPrint('fetchDummyRecordList');
+    state = state.copyWith(loading: true);
+    await Future.delayed(const Duration(milliseconds: 1500));
     final recordList = dummyRecordList;
-    state = state.copyWith(recordList: recordList);
+    state = state.copyWith(
+      recordList: recordList,
+      loading: false,
+    );
   }
 
   Future<void> fetchHeatmapData() async {

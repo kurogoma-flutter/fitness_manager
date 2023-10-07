@@ -10,5 +10,6 @@ class HomePageState with _$HomePageState {
     @Default([]) List<Record> recordList,
     @Default([]) List<Map<DateTime, int>> heatmapData,
     @Default(2023) int selectedYear,
+    @Default(false) bool loading,
   }) = _HomePageState;
 }

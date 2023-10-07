@@ -34,6 +34,7 @@ final router = GoRouter(
   /// ルート定義
   routes: <RouteBase>[
     StatefulShellRoute.indexedStack(
+      parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state, navigationShell) {
         return ScaffoldWithBottomNavigationBar(navigationShell);
       },
@@ -81,6 +82,13 @@ final router = GoRouter(
             GoRoute(
               path: HomePage.routePath,
               builder: (context, state) => const HomePage(),
+              routes: [
+                GoRoute(
+                  path: MyFitnessPage.routePath,
+                  name: MyFitnessPage.routeName,
+                  builder: (context, state) => const MyFitnessPage(),
+                ),
+              ],
             ),
           ],
         ),
@@ -95,44 +103,5 @@ final router = GoRouter(
         ),
       ],
     ),
-
-    GoRoute(
-      path: MyFitnessPage.routePath,
-      name: MyFitnessPage.routeName,
-      builder: (context, state) => const MyFitnessPage(),
-    ),
-
-    // /// アプリホーム
-    // GoRoute(
-    //     name: SampleHomePage.routeName,
-    //     path: SampleHomePage.routePath,
-    //     pageBuilder: (context, state) => NoTransitionPage(
-    //           key: state.pageKey,
-    //           child: const SampleHomePage(),
-    //         ),
-    //     routes: [
-    //       // ネストかつアニメーション込みの画面遷移
-    //       GoRoute(
-    //         name: SampleDetailPage.routeName,
-    //         path: SampleDetailPage.routePath,
-    //         pageBuilder: (context, state) => CustomTransitionPage(
-    //           key: state.pageKey,
-    //           child: const SampleDetailPage(),
-    //           transitionDuration: const Duration(milliseconds: 300),
-    //           transitionsBuilder:
-    //               (context, animation, secondaryAnimation, child) {
-    //             return SlideTransitionBuilder().buildTransitions(
-    //               MaterialPageRoute(
-    //                 builder: (context) => const SampleDetailPage(),
-    //               ),
-    //               context,
-    //               animation,
-    //               secondaryAnimation,
-    //               child,
-    //             );
-    //           },
-    //         ),
-    //       ),
-    //     ]),
   ],
 );

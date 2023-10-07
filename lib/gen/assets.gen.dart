@@ -58,6 +58,10 @@ class $AssetsImagesGen {
   AssetGenImage get listChoiceTooltip =>
       const AssetGenImage('assets/images/list_choice_tooltip.png');
 
+  /// File path: assets/images/loading-lipple.gif
+  AssetGenImage get loadingLipple =>
+      const AssetGenImage('assets/images/loading-lipple.gif');
+
   /// File path: assets/images/my-video-icon.png
   AssetGenImage get myVideoIcon =>
       const AssetGenImage('assets/images/my-video-icon.png');
@@ -93,6 +97,7 @@ class $AssetsImagesGen {
         homeIcon,
         kurogomaSplash,
         listChoiceTooltip,
+        loadingLipple,
         myVideoIcon,
         recordFitness,
         settingIconActive,
