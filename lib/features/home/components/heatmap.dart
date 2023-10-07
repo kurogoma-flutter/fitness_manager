@@ -38,6 +38,7 @@ class _HeatmapState extends State<Heatmap> {
   @override
   void didChangeDependencies() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // 初期位置で自分の月が見えるようにする
       final currentMonth = DateTime.now().month;
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent * ((currentMonth - 1) / 12),
