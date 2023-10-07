@@ -33,10 +33,26 @@ class _HeatmapState extends State<Heatmap> {
   DateTime? _selectedDate;
   OverlayEntry? _overlayEntry;
 
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void didChangeDependencies() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final currentMonth = DateTime.now().month;
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent * ((currentMonth - 1) / 12),
+        duration: const Duration(milliseconds: 1),
+        curve: Curves.easeOut,
+      );
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
+      controller: _scrollController,
       child: GestureDetector(
         onLongPress: _showPopupMenu,
         onLongPressUp: _hidePopupMenu,
