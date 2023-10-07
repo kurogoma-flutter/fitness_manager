@@ -20,7 +20,9 @@ class RecordCollectionDataSource {
     required Record recordModel,
   }) async {
     // データ追加
-    await isar.records.put(recordModel);
+    await isar.writeTxn(() async {
+      await isar.records.put(recordModel);
+    });
   }
 
   // データ削除
@@ -28,7 +30,9 @@ class RecordCollectionDataSource {
     required int id,
   }) async {
     // データ削除
-    await isar.records.delete(id);
+    await isar.writeTxn(() async {
+      await isar.records.delete(id);
+    });
   }
 
   // リストの順番を更新
@@ -37,6 +41,8 @@ class RecordCollectionDataSource {
     required List<Record> recordList,
   }) async {
     // データ更新
-    await isar.records.putAll(recordList);
+    await isar.writeTxn(() async {
+      await isar.records.putAll(recordList);
+    });
   }
 }

@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'mylist/mylist_collection.dart';
 import 'record/record_collection.dart';
-import 'todo/todo_collection.dart';
 
 class IsarInstance {
   factory IsarInstance() {
@@ -18,8 +18,8 @@ class IsarInstance {
     final dir = await getApplicationSupportDirectory();
     _isar = await Isar.open(
       [
-        TodoSchema,
         RecordSchema,
+        MyListSchema,
       ],
       directory: kIsWeb ? '' : dir.path,
       inspector: true,
@@ -28,6 +28,6 @@ class IsarInstance {
 
   Isar get isar => _isar!;
 
-  IsarCollection<Todo> get todos => _isar!.collection<Todo>();
   IsarCollection<Record> get records => _isar!.collection<Record>();
+  IsarCollection<MyList> get mylist => _isar!.collection<MyList>();
 }

@@ -222,7 +222,6 @@ class _CreateItemBottomSheetState extends State<CreateItemBottomSheet> {
                         ),
                       ],
                       onChanged: (RmUnitType? value) {
-                        print(value);
                         setState(() {
                           selectedRmType = value ?? RmUnitType.times;
                         });

@@ -5,6 +5,7 @@ import '../../core/keys/form_keys.dart';
 import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
 import '../component/form/input_text_form.dart';
+import 'my_fitness_view_model.dart';
 
 const youtubeDomainList = [
   'https://www.youtube.com',
@@ -24,6 +25,8 @@ class MyFitnessPage extends StatefulHookConsumerWidget {
 class _MyFitnessPageState extends ConsumerState<MyFitnessPage> {
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(myFitnessViewModelProvider);
+
     return Scaffold(
       backgroundColor: ColorTheme.primaryBackGround,
       appBar: AppBar(
@@ -78,10 +81,12 @@ class _MyFitnessPageState extends ConsumerState<MyFitnessPage> {
                       onPressed: () {
                         // バリデーション
                         if (myFitnessFormKey.currentState!.validate()) {
-                          print('OK');
-                        } else {
-                          print('NG');
-                        }
+                          ref
+                              .read(myFitnessViewModelProvider.notifier)
+                              .setMyFitnessData(
+                                url: myFitnessUrlKey.currentState!.value!,
+                              );
+                        } else {}
                       },
                       icon: Icon(
                         Icons.add,
@@ -89,6 +94,69 @@ class _MyFitnessPageState extends ConsumerState<MyFitnessPage> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                  ),
+                  itemCount: state.myList.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        AppRouter().launchURL(state.myList[index].linkUrl);
+                      },
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: ColorTheme.primaryCard,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          children: [
+                            DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: ColorTheme.secondaryCard,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                ),
+                              ),
+                              child: SizedBox(
+                                height: 120,
+                                width: double.infinity,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(12),
+                                    topRight: Radius.circular(12),
+                                  ),
+                                  child: Image.network(
+                                    state.myList[index].thumbnailUrl,
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(2),
+                              child: Text(
+                                state.myList[index].title,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: ColorTheme.primaryText,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
