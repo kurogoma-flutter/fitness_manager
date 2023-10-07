@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/logger/logger.dart';
 import '../../core/model/isar/record/record_collection_data_source.dart';
 import '../../local/dummy_record_list.dart';
 import 'home_page_state.dart';
@@ -18,6 +19,17 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
 
   final _dataSource = RecordCollectionDataSource();
 
+  Future<bool> isFirstLaunch() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isFirstLaunch') ?? true;
+  }
+
+  Future<void> setFirstLaunch() async {
+    logger.d('setFirstLaunch');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isFirstLaunch', false);
+  }
+
   Future<void> fetchRecordList() async {
     state = state.copyWith(loading: true);
     await Future.delayed(const Duration(milliseconds: 1500));
@@ -33,7 +45,7 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
     await Future.delayed(const Duration(milliseconds: 1500));
     final recordList = dummyRecordList;
     state = state.copyWith(
-      recordList: recordList,
+      recordList: [],
       loading: false,
     );
   }

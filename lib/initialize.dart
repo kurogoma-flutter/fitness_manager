@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/model/isar/isar_instance.dart';
@@ -14,5 +15,6 @@ class Initialize {
       url: dotenv.env['SUPABASE_URL']!,
       anonKey: dotenv.env['SUPABASE_KEY']!,
     );
+    await SharedPreferences.getInstance();
   }
 }

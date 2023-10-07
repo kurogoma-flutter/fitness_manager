@@ -33,7 +33,7 @@ class MiddleHeadlineText extends StatelessWidget {
       style: TextStyle(
         color: _textColor,
         overflow: textOverflow,
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: FontWeight.w600,
       ),
     );

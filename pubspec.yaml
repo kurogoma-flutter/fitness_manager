@@ -37,6 +37,7 @@ dependencies:
   riverpod_generator: ^2.1.5
   riverpod_lint: ^1.0.1
   shared_preferences: ^2.0.15
+  showcaseview: ^2.0.3
   supabase_flutter: ^1.10.20
   url_launcher: ^6.1.6
   uuid: ^3.0.7
