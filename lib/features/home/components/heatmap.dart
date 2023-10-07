@@ -57,7 +57,9 @@ class _HeatmapState extends State<Heatmap> {
   }
 
   void _showPopupMenu() {
-    if (_selectedDate == null) return;
+    if (_selectedDate == null) {
+      return;
+    }
 
     final overlay = Overlay.of(context);
     _overlayEntry = OverlayEntry(
