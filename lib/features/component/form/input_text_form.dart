@@ -162,7 +162,7 @@ class InputTextForm extends StatelessWidget {
         counterText: counterText,
         hintText: formHintText,
         hintStyle: TextStyle(
-          color: ColorTheme.primaryText,
+          color: ColorTheme.primaryIcon,
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
