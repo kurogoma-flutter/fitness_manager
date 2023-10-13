@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/router/app_router.dart';
 import '../../component/color/color_theme.dart';
+import '../components/legal_texts.dart';
 
 class AppLegalPage extends HookConsumerWidget {
   const AppLegalPage({super.key});
@@ -81,87 +82,6 @@ class AppLegalPage extends HookConsumerWidget {
                   '本規約の解釈にあたっては、日本の法律を準拠法とします。本アプリに関する紛争については、千葉地方裁判所を専属的合意管轄とします。',
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class PrimaryLegalText extends StatelessWidget {
-  const PrimaryLegalText({
-    required this.text,
-    super.key,
-  });
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 4,
-        bottom: 4,
-        left: 16,
-        right: 16,
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 16,
-          color: ColorTheme.primaryText,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-}
-
-class SecondaryLegalText extends StatelessWidget {
-  const SecondaryLegalText({
-    required this.text,
-    super.key,
-  });
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 4,
-        bottom: 4,
-        left: 32,
-        right: 16,
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 16,
-          color: ColorTheme.primaryText,
-          fontWeight: FontWeight.w300,
-        ),
-      ),
-    );
-  }
-}
-
-class TertiaryLegalText extends StatelessWidget {
-  const TertiaryLegalText({
-    required this.text,
-    super.key,
-  });
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 4,
-        bottom: 4,
-        left: 48,
-        right: 16,
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 16,
-          color: ColorTheme.primaryText,
-          fontWeight: FontWeight.w300,
         ),
       ),
     );
