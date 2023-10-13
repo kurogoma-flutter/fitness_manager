@@ -31,6 +31,7 @@ dependencies:
   json_serializable: ^6.7.1
   logger: ^1.1.0
   mockito: ^5.4.0
+  package_info_plus: ^4.1.0
   path_provider: ^2.0.15
   retrofit: ^4.0.1
   riverpod_annotation: ^2.1.0
