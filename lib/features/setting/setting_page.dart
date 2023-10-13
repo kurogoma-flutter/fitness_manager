@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
+import 'components/backup_data_dialog.dart';
 import 'components/reset_data_dialog.dart';
 import 'components/setting_list_tile.dart';
 import 'pages/about_this_app_page.dart';
@@ -72,6 +73,15 @@ class SettingPage extends StatelessWidget {
                   await showDialog(
                     context: context,
                     builder: (context) => const ResetDataDialog(),
+                  );
+                },
+              ),
+              SettingListTile(
+                label: 'バックアップをとる',
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) => const BackupDataDialog(),
                   );
                 },
               ),

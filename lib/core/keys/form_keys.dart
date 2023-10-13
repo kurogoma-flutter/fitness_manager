@@ -10,3 +10,6 @@ final secondComponentKey = GlobalKey();
 // My Fitness
 final myFitnessFormKey = GlobalKey<FormState>();
 final myFitnessUrlKey = GlobalKey<FormFieldState<String>>();
+
+// Backup
+final buckUpEmail = GlobalKey<FormFieldState<String>>();
