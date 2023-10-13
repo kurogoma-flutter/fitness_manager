@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/router/app_router.dart';
 import '../../component/color/color_theme.dart';
-import '../setting_page_state.dart';
 import '../setting_page_view_model.dart';
 
 class AboutThisAppPage extends HookConsumerWidget {

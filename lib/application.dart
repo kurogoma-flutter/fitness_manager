@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'core/router/router.dart';
 import 'features/component/color.dart';
+import 'gen/fonts.gen.dart';
 
 class Application extends StatelessWidget {
   const Application({super.key});
@@ -16,7 +17,7 @@ class Application extends StatelessWidget {
         canvasColor: CustomColor.transparent,
         highlightColor: CustomColor.transparent,
         splashColor: CustomColor.transparent,
-        fontFamily: 'LINE_Seed_JP',
+        fontFamily: FontFamily.lINESeedJP,
       ),
       themeMode: ThemeMode.dark,
       routeInformationParser: router.routeInformationParser,

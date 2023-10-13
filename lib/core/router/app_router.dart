@@ -70,14 +70,3 @@ class AppRouter {
     Navigator.of(context).pop();
   }
 }
-
-Future<void> showBottomSheet(BuildContext context, Widget body) {
-  return showModalBottomSheet<dynamic>(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (BuildContext context) {
-      return body;
-    },
-  );
-}

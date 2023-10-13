@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../core/keys/form_keys.dart';
 import '../../../core/router/app_router.dart';
 import '../../component/color/color_theme.dart';
 import '../../component/form/input_text_form.dart';
-
-final textFormKey = GlobalKey<FormState>();
-final titleFieldKey = GlobalKey<FormFieldState<String>>();
-final emailFieldKey = GlobalKey<FormFieldState<String>>();
-final contentFieldKey = GlobalKey<FormFieldState<String>>();
 
 class InquiryPage extends HookConsumerWidget {
   const InquiryPage({super.key});

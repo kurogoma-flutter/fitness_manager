@@ -12,16 +12,4 @@ class FontFamily {
 
   /// Font family: LINE_Seed_JP
   static const String lINESeedJP = 'LINE_Seed_JP';
-
-  /// Font family: Noto_Sans_JP
-  static const String notoSansJP = 'Noto_Sans_JP';
-
-  /// Font family: RocknRoll_One
-  static const String rocknRollOne = 'RocknRoll_One';
-
-  /// Font family: Yusei_Magic
-  static const String yuseiMagic = 'Yusei_Magic';
-
-  /// Font family: Zen_Maru_Gothic
-  static const String zenMaruGothic = 'Zen_Maru_Gothic';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
@@ -8,17 +9,17 @@ import 'components/setting_list_tile.dart';
 import 'pages/about_this_app_page.dart';
 import 'pages/app_legal_page.dart';
 import 'pages/inquiry_page.dart';
-import 'pages/license_page.dart';
 import 'pages/privacy_policy_page.dart';
+import 'setting_page_view_model.dart';
 
-class SettingPage extends StatelessWidget {
+class SettingPage extends ConsumerWidget {
   const SettingPage({super.key});
 
   static const routeName = 'setting';
   static const routePath = '/setting';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: ColorTheme.primaryBackGround,
       appBar: AppBar(
@@ -57,8 +58,10 @@ class SettingPage extends StatelessWidget {
               ),
               SettingListTile(
                 label: 'ライセンス',
-                onTap: () {
-                  AppRouter().pushNamed(context, AppLicensePage.routeName);
+                onTap: () async {
+                  await ref
+                      .read(settingPageViewModelProvider.notifier)
+                      .showLicense(context);
                 },
               ),
               SettingListTile(

@@ -9,7 +9,6 @@ import '../../features/my_fitness/my_fitness_page.dart';
 import '../../features/setting/pages/about_this_app_page.dart';
 import '../../features/setting/pages/app_legal_page.dart';
 import '../../features/setting/pages/inquiry_page.dart';
-import '../../features/setting/pages/license_page.dart';
 import '../../features/setting/pages/privacy_policy_page.dart';
 import '../../features/setting/setting_page.dart';
 import '../../features/tips/tips_page.dart';
@@ -61,11 +60,6 @@ final router = GoRouter(
                   path: InquiryPage.routePath,
                   name: InquiryPage.routeName,
                   builder: (context, state) => const InquiryPage(),
-                ),
-                GoRoute(
-                  path: AppLicensePage.routePath,
-                  name: AppLicensePage.routeName,
-                  builder: (context, state) => const AppLicensePage(),
                 ),
                 GoRoute(
                   path: PrivacyPolicyPage.routePath,

@@ -1,2 +1,1 @@
-const androidId = '';
-const appleId = '';
+
