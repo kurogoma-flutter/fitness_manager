@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../core/model/isar/record/record_collection_data_source.dart';
 import '../../gen/assets.gen.dart';
 import 'setting_page_state.dart';
 
@@ -12,6 +13,8 @@ final settingPageViewModelProvider =
 
 class SettingPageViewModel extends StateNotifier<SettingPageState> {
   SettingPageViewModel() : super(const SettingPageState());
+
+  final recordDataSource = RecordCollectionDataSource();
 
   Future<void> fetchAppVersion() async {
     final packageInfo = await PackageInfo.fromPlatform();
@@ -34,5 +37,9 @@ class SettingPageViewModel extends StateNotifier<SettingPageState> {
         height: 100,
       ),
     );
+  }
+
+  Future<void> resetRecordData() async {
+    await recordDataSource.deleteAllRecordData();
   }
 }

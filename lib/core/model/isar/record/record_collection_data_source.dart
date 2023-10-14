@@ -35,6 +35,18 @@ class RecordCollectionDataSource {
     });
   }
 
+  // 一括削除
+  Future<void> deleteAllRecordData() async {
+    // データ一覧取得
+    final recordList = await isar.records.where().sortByNum().findAll();
+    // idの抽出
+    final idList = recordList.map((e) => e.id).toList();
+    // データ削除
+    await isar.writeTxn(() async {
+      await isar.records.deleteAll(idList);
+    });
+  }
+
   // リストの順番を更新
   // 更新したnumでレコードを全て更新する
   Future<void> updateRecordListOrder({
