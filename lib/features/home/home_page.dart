@@ -7,6 +7,7 @@ import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
 import '../component/text/middle_headline_text.dart';
 import 'components/create_item_bottom_sheet.dart';
+import 'components/edit_item_bottom_sheet.dart';
 import 'components/heatmap.dart';
 import 'components/home_header.dart';
 import 'components/loading.dart';
@@ -90,6 +91,14 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
       });
     });
     super.initState();
+  }
+
+  String _loadText(double load) {
+    // loadが整数であれば小数点以下を削除
+    if (load % 1 == 0) {
+      return load.toInt().toString();
+    }
+    return load.toString();
   }
 
   @override
@@ -206,27 +215,38 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
+                          final record = widget.state.recordList[index];
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: ColorTheme.primaryCard,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 12,
-                                  top: 16,
-                                  bottom: 16,
-                                ),
-                                child: Text(
-                                  '${widget.state.recordList[index].category} ${widget.state.recordList[index].load}${widget.state.recordList[index].weightUnitType.text} x ${widget.state.recordList[index].time}${widget.state.recordList[index].rmUnitType.text}',
-                                  style: TextStyle(
-                                    color: ColorTheme.primaryText,
-                                    fontSize: 15,
+                            child: GestureDetector(
+                              onTap: () async {
+                                await AppRouter().showBottomSheet(
+                                  context,
+                                  EditItemBottomSheet(
+                                    record: record,
                                   ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                );
+                              },
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: ColorTheme.primaryCard,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 12,
+                                    top: 16,
+                                    bottom: 16,
+                                  ),
+                                  child: Text(
+                                    '${record.category} ${_loadText(record.load)}${record.weightUnitType.text} x ${record.time}${record.rmUnitType.text}',
+                                    style: TextStyle(
+                                      color: ColorTheme.primaryText,
+                                      fontSize: 15,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                             ),

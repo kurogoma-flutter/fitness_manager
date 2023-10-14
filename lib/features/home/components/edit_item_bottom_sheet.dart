@@ -5,23 +5,52 @@ import '../../../core/enum/rm_unit_type.dart';
 import '../../../core/enum/weight_unit_type.dart';
 import '../../../core/keys/form_keys.dart';
 import '../../../core/logger/logger.dart';
+import '../../../core/model/isar/record/record_collection.dart';
 import '../../../gen/assets.gen.dart';
 import '../../component/color/color_theme.dart';
 import '../../component/form/input_text_form.dart';
 import '../home_page_view_model.dart';
 import 'select_list_dialog.dart';
 
-class CreateItemBottomSheet extends ConsumerStatefulWidget {
-  const CreateItemBottomSheet({super.key});
+class EditItemBottomSheet extends ConsumerStatefulWidget {
+  const EditItemBottomSheet({
+    required this.record,
+    super.key,
+  });
+
+  final Record record;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _CreateItemBottomSheetState();
+      _EditItemBottomSheetState();
 }
 
-class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
+class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
   WeightUnitType selectedWightType = WeightUnitType.kg;
   RmUnitType selectedRmType = RmUnitType.times;
+
+  @override
+  void didChangeDependencies() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      textFormKeyEdit.currentState!.didChange(widget.record.category);
+      weightKeyEdit.currentState!.didChange(_loadText(widget.record.load));
+      repKeyEdit.currentState!.didChange(widget.record.time.toString());
+      setState(() {
+        selectedWightType = widget.record.weightUnitType;
+        selectedRmType = widget.record.rmUnitType;
+      });
+    });
+    super.didChangeDependencies();
+  }
+
+  String _loadText(double load) {
+    // loadが整数であれば小数点以下を削除
+    if (load % 1 == 0) {
+      return load.toInt().toString();
+    }
+    return load.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -67,10 +96,14 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                             SizedBox(
                               width: MediaQuery.sizeOf(context).width * 0.75,
                               child: InputTextForm(
-                                textFormKey: textFormKey,
+                                textFormKey: textFormKeyEdit,
                                 validator: (text) => null,
                                 onChanged: (value) {
-                                  textFormKey.currentState!.didChange(value);
+                                  if (value == null) {
+                                    return;
+                                  }
+                                  textFormKeyEdit.currentState!
+                                      .didChange(value);
                                 },
                               ),
                             ),
@@ -87,7 +120,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                                 }
                                 // 種目フィールドに入力
                                 logger.d('result: $result');
-                                textFormKey.currentState!.didChange(result);
+                                textFormKeyEdit.currentState!.didChange(result);
                               },
                               icon: const Icon(Icons.add),
                             ),
@@ -121,7 +154,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                     SizedBox(
                       width: 150,
                       child: InputTextForm(
-                        textFormKey: weightKey,
+                        textFormKey: weightKeyEdit,
                         validator: (text) => null,
                         inputType: TextInputType.number,
                         onChanged: (value) {
@@ -129,7 +162,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                             return;
                           }
                           // 数字、小数点以外は消去する
-                          weightKey.currentState!.didChange(
+                          weightKeyEdit.currentState!.didChange(
                             value.replaceAll(RegExp(r'[^0-9.]'), ''),
                           );
                           return;
@@ -187,7 +220,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                     SizedBox(
                       width: 150,
                       child: InputTextForm(
-                        textFormKey: repKey,
+                        textFormKey: repKeyEdit,
                         validator: (_) => null,
                         inputType: TextInputType.number,
                         onChanged: (value) {
@@ -195,7 +228,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                             return;
                           }
                           // 数字以外は消去する
-                          repKey.currentState!.didChange(
+                          repKeyEdit.currentState!.didChange(
                             value.replaceAll(RegExp(r'[^0-9]'), ''),
                           );
                           return;
@@ -249,22 +282,23 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    if (textFormKey.currentState!.value == null ||
-                        weightKey.currentState!.value == null ||
-                        repKey.currentState!.value == null) {
+                    if (textFormKeyEdit.currentState!.value == null ||
+                        weightKeyEdit.currentState!.value == null ||
+                        repKeyEdit.currentState!.value == null) {
                       return;
                     }
 
-                    ref.read(homePageViewModelProvider.notifier).addNewRecord(
-                          category: textFormKey.currentState!.value!,
+                    ref.read(homePageViewModelProvider.notifier).updateRecord(
+                          targetRecord: widget.record,
+                          category: textFormKeyEdit.currentState!.value!,
                           load: double.parse(
                             double.parse(
-                              weightKey.currentState!.value!,
+                              weightKeyEdit.currentState!.value!,
                             ).toStringAsFixed(1),
                           ),
                           weightUnitType: selectedWightType,
                           time: int.parse(
-                            repKey.currentState!.value!,
+                            repKeyEdit.currentState!.value!,
                           ),
                           rmUnitType: selectedRmType,
                         );
@@ -279,7 +313,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                     ),
                   ),
                   child: Text(
-                    '登録する',
+                    '更新する',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       color: ColorTheme.secondaryText,

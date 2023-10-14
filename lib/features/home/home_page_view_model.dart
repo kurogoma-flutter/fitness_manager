@@ -73,6 +73,28 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
     await fetchRecordList();
   }
 
+  Future<void> updateRecord({
+    required Record targetRecord,
+    required String category,
+    required double load,
+    required WeightUnitType weightUnitType,
+    required int time,
+    required RmUnitType rmUnitType,
+  }) async {
+    final now = DateTime.now();
+    targetRecord
+      ..category = category
+      ..load = load
+      ..weightUnitType = weightUnitType
+      ..time = time
+      ..rmUnitType = rmUnitType
+      ..updatedAt = now;
+    await _dataSource.setRecordData(recordModel: targetRecord);
+    await setMyTrack();
+    await fetchHeatmapData();
+    await fetchRecordList();
+  }
+
   Future<void> fetchHeatmapData() async {
     final heatmapData = await _myTrackDataSource.fetchMyTrackList();
 
