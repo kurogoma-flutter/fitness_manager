@@ -36,6 +36,10 @@ class AppRouter {
   /// 画面をpop
   void pop(BuildContext context) => context.pop();
 
+  /// 値を返却してpop
+  void popWithResult(BuildContext context, dynamic result) =>
+      context.pop(result);
+
   // QueryParamsを取得
   Map<String, String> getQueryParams(String url) {
     final uri = Uri.parse(url);

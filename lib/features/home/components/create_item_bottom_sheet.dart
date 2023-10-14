@@ -4,10 +4,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../core/enum/rm_unit_type.dart';
 import '../../../core/enum/weight_unit_type.dart';
 import '../../../core/keys/form_keys.dart';
+import '../../../core/logger/logger.dart';
 import '../../../gen/assets.gen.dart';
 import '../../component/color/color_theme.dart';
 import '../../component/form/input_text_form.dart';
 import '../home_page_view_model.dart';
+import 'select_list_dialog.dart';
 
 class CreateItemBottomSheet extends ConsumerStatefulWidget {
   const CreateItemBottomSheet({super.key});
@@ -71,7 +73,19 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                             ),
                             const SizedBox(width: 16),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final result = await showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const SelectListDialog(),
+                                );
+                                if (result == null) {
+                                  return;
+                                }
+                                // 種目フィールドに入力
+                                logger.d('result: $result');
+                                textFormKey.currentState!.didChange(result);
+                              },
                               icon: const Icon(Icons.add),
                             ),
                           ],
