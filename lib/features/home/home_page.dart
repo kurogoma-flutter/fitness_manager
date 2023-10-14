@@ -9,6 +9,7 @@ import '../component/text/middle_headline_text.dart';
 import 'components/create_item_bottom_sheet.dart';
 import 'components/edit_item_bottom_sheet.dart';
 import 'components/heatmap.dart';
+import 'components/heatmap_header.dart';
 import 'components/home_header.dart';
 import 'components/loading.dart';
 import 'home_page_state.dart';
@@ -17,6 +18,7 @@ import 'home_page_view_model.dart';
 final GlobalKey _one = GlobalKey();
 final GlobalKey _two = GlobalKey();
 final GlobalKey _three = GlobalKey();
+final GlobalKey four = GlobalKey();
 
 class HomePage extends StatefulHookConsumerWidget {
   const HomePage({super.key});
@@ -86,7 +88,7 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
           return;
         }
         ShowCaseWidget.of(context).startShowCase(
-          [_one, _two, _three],
+          [_one, _two, _three, four],
         );
       });
     });
@@ -112,58 +114,7 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
           child: CustomScrollView(
             physics: const BouncingScrollPhysics(),
             slivers: [
-              SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () async {},
-                      child: Text(
-                        '2023',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: ColorTheme.primaryText,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 2),
-                          width: 12,
-                          height: 12,
-                          color: ColorTheme.secondaryBackGround,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 2),
-                          width: 12,
-                          height: 12,
-                          color: ColorTheme.heatmap4,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 2),
-                          width: 12,
-                          height: 12,
-                          color: ColorTheme.heatmap3,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 2),
-                          width: 12,
-                          height: 12,
-                          color: ColorTheme.heatmap2,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 2),
-                          width: 12,
-                          height: 12,
-                          color: ColorTheme.heatmap1,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              const HeatMapHeader(),
               SliverToBoxAdapter(
                 child: ShowCaseItem(
                   itemKey: _three,
@@ -184,7 +135,11 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
                           },
                           cellSize: 16,
                           defaultColor: ColorTheme.secondaryCard,
-                          targetYear: widget.state.selectedYear,
+                          targetYear: ref.watch(
+                            homePageViewModelProvider.select(
+                              (value) => value.selectedYear,
+                            ),
+                          ),
                         ),
                       ),
                     ],
