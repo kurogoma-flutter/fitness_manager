@@ -17,7 +17,7 @@ class _ResetDataDialogState extends ConsumerState<ResetDataDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       child: FractionallySizedBox(
-        heightFactor: 0.35,
+        heightFactor: 0.55,
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: ColorTheme.primaryCard,
@@ -38,7 +38,7 @@ class _ResetDataDialogState extends ConsumerState<ResetDataDialog> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  '今までのあなたの記録をリセットします。\nリセットした場合、復元することはできませんがよろしいですか？',
+                  '今までのあなたの記録をリセットします。\nリセットした場合、復元することはできませんがよろしいですか？\n「全て削除する」を選択すると、ヒートマップのデータも削除されます。',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -46,47 +46,71 @@ class _ResetDataDialogState extends ConsumerState<ResetDataDialog> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        AppRouter().pop(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorTheme.primaryWhite,
-                      ),
-                      child: Text(
-                        'キャンセル',
-                        style: TextStyle(
-                          color: ColorTheme.primaryBackGround,
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          AppRouter().pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorTheme.primaryWhite,
+                        ),
+                        child: Text(
+                          '全て削除する',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: ColorTheme.primaryActive,
+                          ),
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await ref
-                            .read(settingPageViewModelProvider.notifier)
-                            .resetRecordData();
-                        if (!mounted) {
-                          return;
-                        }
-                        AppRouter().pop(context);
-                        await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const _CompleteDialog();
-                          },
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorTheme.primaryWhite,
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await ref
+                              .read(settingPageViewModelProvider.notifier)
+                              .resetRecordData();
+                          if (!mounted) {
+                            return;
+                          }
+                          AppRouter().pop(context);
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const _CompleteDialog();
+                            },
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorTheme.primaryWhite,
+                        ),
+                        child: Text(
+                          'レコードのみリセット',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: ColorTheme.primaryActive,
+                          ),
+                        ),
                       ),
-                      child: Text(
-                        'リセット',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: ColorTheme.primaryActive,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          AppRouter().pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorTheme.primaryWhite,
+                        ),
+                        child: Text(
+                          'キャンセル',
+                          style: TextStyle(
+                            color: ColorTheme.primaryBackGround,
+                          ),
                         ),
                       ),
                     ),

@@ -39,4 +39,16 @@ class MyTrackCollectionDataSource {
       });
     }
   }
+
+  /// データの全件削除
+  Future<void> deleteAllMyTrackData() async {
+    // データ一覧取得
+    final myTrackList = await isar.myTracks.where().findAll();
+    // idの抽出
+    final idList = myTrackList.map((e) => e.id).toList();
+    // データ削除
+    await isar.writeTxn(() async {
+      await isar.myTracks.deleteAll(idList);
+    });
+  }
 }

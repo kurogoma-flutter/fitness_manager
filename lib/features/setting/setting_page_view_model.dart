@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../core/model/isar/myTrack/my_track_collection_data_source.dart';
 import '../../core/model/isar/record/record_collection_data_source.dart';
 import '../../gen/assets.gen.dart';
 import 'setting_page_state.dart';
@@ -15,6 +17,7 @@ class SettingPageViewModel extends StateNotifier<SettingPageState> {
   SettingPageViewModel() : super(const SettingPageState());
 
   final recordDataSource = RecordCollectionDataSource();
+  final myTrackDataSource = MyTrackCollectionDataSource();
 
   Future<void> fetchAppVersion() async {
     final packageInfo = await PackageInfo.fromPlatform();
@@ -41,5 +44,24 @@ class SettingPageViewModel extends StateNotifier<SettingPageState> {
 
   Future<void> resetRecordData() async {
     await recordDataSource.deleteAllRecordData();
+  }
+
+  Future<void> resetAllData() async {
+    await recordDataSource.deleteAllRecordData();
+    await myTrackDataSource.deleteAllMyTrackData();
+  }
+
+  /// supabaseDBに問い合わせを送信する
+  Future<void> sendInquiry({
+    required String title,
+    required String email,
+    required String content,
+  }) async {
+    final supabase = Supabase.instance.client;
+    await supabase.from('inquiry').insert({
+      'title': title,
+      'email': email,
+      'content': content,
+    });
   }
 }
