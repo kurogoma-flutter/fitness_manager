@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1015924011726",
+    "project_id": "track-peak",
+    "storage_bucket": "track-peak.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015924011726:android:3e6d8596c2bda420a3169f",
+        "android_client_info": {
+          "package_name": "app.kurogoma.fitness.record"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtdjYnvex-wuZN7hcijfa_w1JsJV0bMec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
