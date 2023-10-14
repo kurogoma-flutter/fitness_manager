@@ -69,6 +69,9 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                               child: InputTextForm(
                                 textFormKey: textFormKey,
                                 validator: (text) => null,
+                                onChanged: (value) {
+                                  textFormKey.currentState!.didChange(value);
+                                },
                               ),
                             ),
                             const SizedBox(width: 16),
@@ -121,6 +124,16 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                         textFormKey: textFormKey2,
                         validator: (text) => null,
                         inputType: TextInputType.number,
+                        onChanged: (value) {
+                          if (value == null) {
+                            return;
+                          }
+                          // 数字、小数点以外は消去する
+                          textFormKey2.currentState!.didChange(
+                            value.replaceAll(RegExp(r'[^0-9.]'), ''),
+                          );
+                          return;
+                        },
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -175,8 +188,18 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                       width: 150,
                       child: InputTextForm(
                         textFormKey: textFormKey3,
-                        validator: (text) => null,
+                        validator: (_) => null,
                         inputType: TextInputType.number,
+                        onChanged: (value) {
+                          if (value == null) {
+                            return;
+                          }
+                          // 数字以外は消去する
+                          textFormKey3.currentState!.didChange(
+                            value.replaceAll(RegExp(r'[^0-9]'), ''),
+                          );
+                          return;
+                        },
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -214,24 +237,6 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                             ),
                           ),
                         ),
-                        DropdownMenuItem<RmUnitType>(
-                          value: RmUnitType.minute,
-                          child: Text(
-                            RmUnitType.minute.text,
-                            style: TextStyle(
-                              color: ColorTheme.primaryText,
-                            ),
-                          ),
-                        ),
-                        DropdownMenuItem<RmUnitType>(
-                          value: RmUnitType.second,
-                          child: Text(
-                            RmUnitType.second.text,
-                            style: TextStyle(
-                              color: ColorTheme.primaryText,
-                            ),
-                          ),
-                        ),
                       ],
                       onChanged: (RmUnitType? value) {
                         setState(() {
@@ -249,6 +254,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                         textFormKey3.currentState!.value == null) {
                       return;
                     }
+
                     ref.read(homePageViewModelProvider.notifier).addNewRecord(
                           category: textFormKey.currentState!.value!,
                           load: double.parse(
@@ -257,7 +263,9 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                             ).toStringAsFixed(1),
                           ),
                           weightUnitType: selectedWightType,
-                          time: textFormKey3.currentState!.value!,
+                          time: int.parse(
+                            textFormKey3.currentState!.value!,
+                          ),
                           rmUnitType: selectedRmType,
                         );
                     if (!mounted) {

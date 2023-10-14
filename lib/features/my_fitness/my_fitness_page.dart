@@ -67,6 +67,9 @@ class _MyFitnessPageState extends ConsumerState<MyFitnessPage> {
                       child: InputTextForm(
                         formHintText: 'URLを入力',
                         textFormKey: myFitnessUrlKey,
+                        onChanged: (value) {
+                          myFitnessUrlKey.currentState!.didChange(value);
+                        },
                         validator: (String? value) {
                           // 空文字チェック
                           if (value == null || value.isEmpty) {

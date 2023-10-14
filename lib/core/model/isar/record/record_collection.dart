@@ -18,7 +18,7 @@ class Record {
   @enumerated
   late WeightUnitType weightUnitType;
 
-  late String time;
+  late int time;
 
   @enumerated
   late RmUnitType rmUnitType;

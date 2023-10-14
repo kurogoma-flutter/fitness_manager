@@ -46,7 +46,7 @@ const RecordSchema = CollectionSchema(
     r'time': PropertySchema(
       id: 5,
       name: r'time',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'updatedAt': PropertySchema(
       id: 6,
@@ -95,7 +95,6 @@ int _recordEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.category.length * 3;
-  bytesCount += 3 + object.time.length * 3;
   return bytesCount;
 }
 
@@ -110,7 +109,7 @@ void _recordSerialize(
   writer.writeDouble(offsets[2], object.load);
   writer.writeLong(offsets[3], object.num);
   writer.writeByte(offsets[4], object.rmUnitType.index);
-  writer.writeString(offsets[5], object.time);
+  writer.writeLong(offsets[5], object.time);
   writer.writeDateTime(offsets[6], object.updatedAt);
   writer.writeByte(offsets[7], object.weightUnitType.index);
 }
@@ -130,7 +129,7 @@ Record _recordDeserialize(
   object.rmUnitType =
       _RecordrmUnitTypeValueEnumMap[reader.readByteOrNull(offsets[4])] ??
           RmUnitType.times;
-  object.time = reader.readString(offsets[5]);
+  object.time = reader.readLong(offsets[5]);
   object.updatedAt = reader.readDateTime(offsets[6]);
   object.weightUnitType =
       _RecordweightUnitTypeValueEnumMap[reader.readByteOrNull(offsets[7])] ??
@@ -157,7 +156,7 @@ P _recordDeserializeProp<P>(
       return (_RecordrmUnitTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           RmUnitType.times) as P;
     case 5:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 6:
       return (reader.readDateTime(offset)) as P;
     case 7:
@@ -172,16 +171,12 @@ P _recordDeserializeProp<P>(
 const _RecordrmUnitTypeEnumValueMap = {
   'times': 0,
   'rm': 1,
-  'minute': 2,
-  'second': 3,
-  'set': 4,
+  'set': 2,
 };
 const _RecordrmUnitTypeValueEnumMap = {
   0: RmUnitType.times,
   1: RmUnitType.rm,
-  2: RmUnitType.minute,
-  3: RmUnitType.second,
-  4: RmUnitType.set,
+  2: RmUnitType.set,
 };
 const _RecordweightUnitTypeEnumValueMap = {
   'kg': 0,
@@ -780,55 +775,46 @@ extension RecordQueryFilter on QueryBuilder<Record, Record, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Record, Record, QAfterFilterCondition> timeEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<Record, Record, QAfterFilterCondition> timeEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'time',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Record, Record, QAfterFilterCondition> timeGreaterThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'time',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Record, Record, QAfterFilterCondition> timeLessThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'time',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Record, Record, QAfterFilterCondition> timeBetween(
-    String lower,
-    String upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -837,74 +823,6 @@ extension RecordQueryFilter on QueryBuilder<Record, Record, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Record, Record, QAfterFilterCondition> timeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'time',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Record, Record, QAfterFilterCondition> timeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'time',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Record, Record, QAfterFilterCondition> timeContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'time',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Record, Record, QAfterFilterCondition> timeMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'time',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Record, Record, QAfterFilterCondition> timeIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'time',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Record, Record, QAfterFilterCondition> timeIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'time',
-        value: '',
       ));
     });
   }
@@ -1260,10 +1178,9 @@ extension RecordQueryWhereDistinct on QueryBuilder<Record, Record, QDistinct> {
     });
   }
 
-  QueryBuilder<Record, Record, QDistinct> distinctByTime(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Record, Record, QDistinct> distinctByTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'time', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'time');
     });
   }
 
@@ -1317,7 +1234,7 @@ extension RecordQueryProperty on QueryBuilder<Record, Record, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Record, String, QQueryOperations> timeProperty() {
+  QueryBuilder<Record, int, QQueryOperations> timeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'time');
     });

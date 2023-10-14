@@ -11,5 +11,9 @@ class HomePageState with _$HomePageState {
     @Default([]) List<Map<DateTime, int>> heatmapData,
     @Default(2023) int selectedYear,
     @Default(false) bool loading,
+    // 新規データ用
+    @Default('') String newRecordTitle,
+    @Default(0) int weight,
+    @Default(0) int rep,
   }) = _HomePageState;
 }

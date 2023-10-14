@@ -55,6 +55,9 @@ class BackupDataDialog extends StatelessWidget {
                   textFormKey: buckUpEmail,
                   validator: (_) => null,
                   formHintText: 'メールアドレス',
+                  onChanged: (value) {
+                    buckUpEmail.currentState!.didChange(value);
+                  },
                 ),
                 const SizedBox(height: 16),
                 Row(

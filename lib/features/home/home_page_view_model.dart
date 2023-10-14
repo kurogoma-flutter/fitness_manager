@@ -54,7 +54,7 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
     required String category,
     required double load,
     required WeightUnitType weightUnitType,
-    required String time,
+    required int time,
     required RmUnitType rmUnitType,
   }) async {
     final now = DateTime.now();

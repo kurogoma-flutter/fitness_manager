@@ -23,6 +23,7 @@ class InputTextForm extends StatelessWidget {
   factory InputTextForm({
     required GlobalKey<FormFieldState<String>> textFormKey,
     required FormFieldValidator<String> validator,
+    required Function(String?) onChanged,
     String initialValue = '',
     String formHintText = '入力してください',
     AutovalidateMode autoValidateMode = AutovalidateMode.onUserInteraction,
@@ -35,6 +36,7 @@ class InputTextForm extends StatelessWidget {
   }) {
     return InputTextForm._(
       textFormKey: textFormKey,
+      onChanged: onChanged,
       autoValidateMode: autoValidateMode,
       validator: validator,
       initialValue: initialValue,
@@ -54,6 +56,7 @@ class InputTextForm extends StatelessWidget {
     required GlobalKey<FormFieldState<String>> textFormKey,
     required FormFieldValidator<String> validator,
     required int maxLength,
+    required Function(String?) onChanged,
     String initialValue = '',
     String formHintText = '入力してください',
     AutovalidateMode autoValidateMode = AutovalidateMode.onUserInteraction,
@@ -63,6 +66,7 @@ class InputTextForm extends StatelessWidget {
   }) {
     return InputTextForm._(
       textFormKey: textFormKey,
+      onChanged: onChanged,
       autoValidateMode: autoValidateMode,
       validator: validator,
       initialValue: initialValue,
@@ -79,6 +83,7 @@ class InputTextForm extends StatelessWidget {
   const InputTextForm._({
     required this.textFormKey,
     required this.validator,
+    required this.onChanged,
     Key? key,
     this.initialValue = '',
     this.formHintText = '入力してください',
@@ -101,6 +106,9 @@ class InputTextForm extends StatelessWidget {
 
   /// TextFormFieldの制御Key
   final GlobalKey<FormFieldState<String>> textFormKey;
+
+  /// 入力値の変更検知
+  final Function(String?) onChanged;
 
   /// TextFormの初期表示の値
   final String initialValue;
@@ -143,12 +151,12 @@ class InputTextForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       focusNode: focusNode,
-      controller: TextEditingController(text: initialValue),
       key: textFormKey,
       maxLength: maxLength,
       maxLines: maxLines,
       keyboardType: inputType,
       inputFormatters: inputFormatters,
+      onChanged: onChanged,
       style: TextStyle(
         color: ColorTheme.primaryWhite,
         fontSize: 14,

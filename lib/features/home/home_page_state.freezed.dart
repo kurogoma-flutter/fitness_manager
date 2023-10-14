@@ -20,7 +20,10 @@ mixin _$HomePageState {
   List<Map<DateTime, int>> get heatmapData =>
       throw _privateConstructorUsedError;
   int get selectedYear => throw _privateConstructorUsedError;
-  bool get loading => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError; // 新規データ用
+  String get newRecordTitle => throw _privateConstructorUsedError;
+  int get weight => throw _privateConstructorUsedError;
+  int get rep => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomePageStateCopyWith<HomePageState> get copyWith =>
@@ -37,7 +40,10 @@ abstract class $HomePageStateCopyWith<$Res> {
       {List<Record> recordList,
       List<Map<DateTime, int>> heatmapData,
       int selectedYear,
-      bool loading});
+      bool loading,
+      String newRecordTitle,
+      int weight,
+      int rep});
 }
 
 /// @nodoc
@@ -57,6 +63,9 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
     Object? heatmapData = null,
     Object? selectedYear = null,
     Object? loading = null,
+    Object? newRecordTitle = null,
+    Object? weight = null,
+    Object? rep = null,
   }) {
     return _then(_value.copyWith(
       recordList: null == recordList
@@ -75,6 +84,18 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      newRecordTitle: null == newRecordTitle
+          ? _value.newRecordTitle
+          : newRecordTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      weight: null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as int,
+      rep: null == rep
+          ? _value.rep
+          : rep // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -91,7 +112,10 @@ abstract class _$$_HomePageStateCopyWith<$Res>
       {List<Record> recordList,
       List<Map<DateTime, int>> heatmapData,
       int selectedYear,
-      bool loading});
+      bool loading,
+      String newRecordTitle,
+      int weight,
+      int rep});
 }
 
 /// @nodoc
@@ -109,6 +133,9 @@ class __$$_HomePageStateCopyWithImpl<$Res>
     Object? heatmapData = null,
     Object? selectedYear = null,
     Object? loading = null,
+    Object? newRecordTitle = null,
+    Object? weight = null,
+    Object? rep = null,
   }) {
     return _then(_$_HomePageState(
       recordList: null == recordList
@@ -127,6 +154,18 @@ class __$$_HomePageStateCopyWithImpl<$Res>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      newRecordTitle: null == newRecordTitle
+          ? _value.newRecordTitle
+          : newRecordTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      weight: null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as int,
+      rep: null == rep
+          ? _value.rep
+          : rep // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -138,7 +177,10 @@ class _$_HomePageState implements _HomePageState {
       {final List<Record> recordList = const [],
       final List<Map<DateTime, int>> heatmapData = const [],
       this.selectedYear = 2023,
-      this.loading = false})
+      this.loading = false,
+      this.newRecordTitle = '',
+      this.weight = 0,
+      this.rep = 0})
       : _recordList = recordList,
         _heatmapData = heatmapData;
 
@@ -166,10 +208,20 @@ class _$_HomePageState implements _HomePageState {
   @override
   @JsonKey()
   final bool loading;
+// 新規データ用
+  @override
+  @JsonKey()
+  final String newRecordTitle;
+  @override
+  @JsonKey()
+  final int weight;
+  @override
+  @JsonKey()
+  final int rep;
 
   @override
   String toString() {
-    return 'HomePageState(recordList: $recordList, heatmapData: $heatmapData, selectedYear: $selectedYear, loading: $loading)';
+    return 'HomePageState(recordList: $recordList, heatmapData: $heatmapData, selectedYear: $selectedYear, loading: $loading, newRecordTitle: $newRecordTitle, weight: $weight, rep: $rep)';
   }
 
   @override
@@ -183,7 +235,11 @@ class _$_HomePageState implements _HomePageState {
                 .equals(other._heatmapData, _heatmapData) &&
             (identical(other.selectedYear, selectedYear) ||
                 other.selectedYear == selectedYear) &&
-            (identical(other.loading, loading) || other.loading == loading));
+            (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.newRecordTitle, newRecordTitle) ||
+                other.newRecordTitle == newRecordTitle) &&
+            (identical(other.weight, weight) || other.weight == weight) &&
+            (identical(other.rep, rep) || other.rep == rep));
   }
 
   @override
@@ -192,7 +248,10 @@ class _$_HomePageState implements _HomePageState {
       const DeepCollectionEquality().hash(_recordList),
       const DeepCollectionEquality().hash(_heatmapData),
       selectedYear,
-      loading);
+      loading,
+      newRecordTitle,
+      weight,
+      rep);
 
   @JsonKey(ignore: true)
   @override
@@ -206,7 +265,10 @@ abstract class _HomePageState implements HomePageState {
       {final List<Record> recordList,
       final List<Map<DateTime, int>> heatmapData,
       final int selectedYear,
-      final bool loading}) = _$_HomePageState;
+      final bool loading,
+      final String newRecordTitle,
+      final int weight,
+      final int rep}) = _$_HomePageState;
 
   @override
   List<Record> get recordList;
@@ -216,6 +278,12 @@ abstract class _HomePageState implements HomePageState {
   int get selectedYear;
   @override
   bool get loading;
+  @override // 新規データ用
+  String get newRecordTitle;
+  @override
+  int get weight;
+  @override
+  int get rep;
   @override
   @JsonKey(ignore: true)
   _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>
