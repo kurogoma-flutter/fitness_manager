@@ -22,6 +22,15 @@ class CreateItemBottomSheet extends ConsumerStatefulWidget {
 class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
   WeightUnitType selectedWightType = WeightUnitType.kg;
   RmUnitType selectedRmType = RmUnitType.times;
+
+  bool get ableToTapSubmitButton =>
+      textFormKey.currentState?.value == null ||
+      textFormKey.currentState?.value == '' ||
+      weightKey.currentState?.value == null ||
+      weightKey.currentState?.value == '' ||
+      repKey.currentState?.value == null ||
+      repKey.currentState?.value == '';
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -249,9 +258,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    if (textFormKey.currentState!.value == null ||
-                        weightKey.currentState!.value == null ||
-                        repKey.currentState!.value == null) {
+                    if (ableToTapSubmitButton) {
                       return;
                     }
 
