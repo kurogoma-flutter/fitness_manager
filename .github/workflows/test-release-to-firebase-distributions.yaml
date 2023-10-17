@@ -17,6 +17,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.13.6"
+
       - name: Create .env.dev file
         run: |
           mkdir env
@@ -29,19 +30,22 @@ jobs:
         run: flutter build apk --release
 
       - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
+        run: curl -sL https://firebase.tools | bash
 
       - name: Authenticate with Firebase using Service Account
         env:
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
         run: |
           echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > ./firebase_service_account.json
-          export GOOGLE_APPLICATION_CREDENTIALS=./firebase_service_account.json
-          firebase login:ci --token ${{ secrets.FIREBASE_TOKEN }}
+          echo "export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase_service_account.json" >> $GITHUB_ENV
 
       - name: Distribute APK to Firebase App Distribution
-        run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app 1:1015924011726:android:3e6d8596c2bda420a3169f --groups testers --debug
+        run: |
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+          --app 1:1015924011726:android:3e6d8596c2bda420a3169f \
+          --groups testers \
+          --debug
+
       - name: Build iOS
         if: runner.os == 'macOS'
         run: |
@@ -50,6 +54,9 @@ jobs:
           xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Release -archivePath $PWD/build/Runner.xcarchive archive
           xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/ios/ipa
 
-      - name: Deploy IPA to Firebase App Distribution
+      - name: Distribute IPA to Firebase App Distribution
         if: runner.os == 'macOS'
-        run: firebase appdistribution:distribute ios/build/ios/ipa/Runner.ipa --app app-1-1015924011726-ios-2f2d38ddb25065ffa3169f --groups testers
+        run: |
+          firebase appdistribution:distribute ios/build/ios/ipa/Runner.ipa \
+          --app app-1-1015924011726-ios-2f2d38ddb25065ffa3169f \
+          --groups testers
