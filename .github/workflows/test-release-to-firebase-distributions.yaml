@@ -1,4 +1,4 @@
-name: Firebase App Distribution
+name: Deploy to Firebase App Distribution
 
 on:
   push:
@@ -10,30 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Install Flutter
-        uses: subosito/flutter-action@v3.13.6
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: "3.13.6"
 
       - name: Build APK
-        run: flutter build apk
+        run: flutter build apk --release
 
-  distribute:
-    needs: build
-    runs-on: ubuntu-latest
+      - name: Deploy APK to Firebase App Distribution
+        run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --token ${{ secrets.FIREBASE_TOKEN }} --groups testers
 
-    steps:
-      - uses: actions/checkout@v2
+      - name: Build iOS
+        if: runner.os == 'macOS'
+        run: |
+          flutter build ios --release --no-codesign
+          cd ios
+          xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Release -archivePath $PWD/build/Runner.xcarchive archive
+          xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/ios/ipa
 
-      - name: Install Fastlane
-        uses: fastlane/setup-fastlane@v2.112.0
-
-      - name: Firebase App Distribution
-        run: fastlane firebase_app_distribution_release
-        with:
-          app_id: track-peak
-          app_name: track-peak
-          distribution_group: testers
-          apk_path: build/app/outputs/apk/release/app-release.apk
+      - name: Deploy IPA to Firebase App Distribution
+        if: runner.os == 'macOS'
+        run: firebase appdistribution:distribute ios/build/ios/ipa/Runner.ipa --token ${{ secrets.FIREBASE_TOKEN }} --groups testers
