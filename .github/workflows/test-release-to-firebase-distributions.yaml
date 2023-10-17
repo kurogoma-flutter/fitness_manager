@@ -32,16 +32,25 @@ jobs:
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
 
-      - name: Authenticate with Firebase using Service Account
+      - name: Install Google Cloud SDK
+        run: |
+          sudo apt-get install -y apt-transport-https ca-certificates gnupg
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          sudo apt-get install -y curl
+          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+          sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+
+      - name: Authenticate with gcloud using Service Account
         env:
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
         run: |
-          echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > ./firebase_service_account.json
-          echo "export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase_service_account.json" >> $GITHUB_ENV
+          echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > firebase_service_account.json
+          gcloud auth activate-service-account --key-file firebase_service_account.json
 
       - name: Distribute APK to Firebase App Distribution
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+          --token ${{ secrets.FIREBASE_TOKEN }} \
           --app 1:1015924011726:android:3e6d8596c2bda420a3169f \
           --groups testers \
           --debug
@@ -58,5 +67,6 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           firebase appdistribution:distribute ios/build/ios/ipa/Runner.ipa \
+          --token ${{ secrets.FIREBASE_TOKEN }} \
           --app app-1-1015924011726-ios-2f2d38ddb25065ffa3169f \
           --groups testers
