@@ -28,6 +28,10 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
+      - name: Install Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+
       - name: Deploy APK to Firebase App Distribution
         run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --token ${{ secrets.FIREBASE_TOKEN }} --groups testers
 
