@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > ./firebase_service_account.json
           export GOOGLE_APPLICATION_CREDENTIALS=./firebase_service_account.json
-          firebase login:ci --token $(firebase auth:application-default:print-access-token)
+          firebase login:ci --token ${{ secrets.FIREBASE_TOKEN }}
 
       - name: Distribute APK to Firebase App Distribution
         run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app 1:1015924011726:android:3e6d8596c2bda420a3169f --groups testers --debug
