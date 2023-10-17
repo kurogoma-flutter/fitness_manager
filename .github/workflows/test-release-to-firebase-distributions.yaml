@@ -19,6 +19,8 @@ jobs:
           flutter-version: "3.13.6"
       - name: Create .env.dev file
         run: |
+          mkdir env
+          touch env/.env.dev
           echo "FLAVOR=${{ secrets.FLAVOR }}" >> env/.env.dev
           echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> env/.env.dev
           echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> env/.env.dev
