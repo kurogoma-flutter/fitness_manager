@@ -17,6 +17,11 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.13.6"
+      - name: Create .env.dev file
+        run: |
+          echo "FLAVOR=${{ secrets.FLAVOR }}" >> env/.env.dev
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> env/.env.dev
+          echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> env/.env.dev
 
       - name: Build APK
         run: flutter build apk --release
