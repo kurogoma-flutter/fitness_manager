@@ -33,7 +33,7 @@ jobs:
           curl -sL https://firebase.tools | bash
 
       - name: Deploy APK to Firebase App Distribution
-        run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --token ${{ secrets.FIREBASE_TOKEN }} --groups testers
+        run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app track-peak --token ${{ secrets.FIREBASE_TOKEN }} --groups testers
 
       - name: Build iOS
         if: runner.os == 'macOS'
