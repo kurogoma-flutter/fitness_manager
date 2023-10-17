@@ -32,9 +32,15 @@ jobs:
         run: |
           curl -sL https://firebase.tools | bash
 
-      - name: Deploy APK to Firebase App Distribution
-        run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app 1:1015924011726:android:3e6d8596c2bda420a3169f --token ${{ secrets.FIREBASE_TOKEN }} --groups testers
+      - name: Authenticate with Firebase using Service Account
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > ./firebase_service_account.json
+          export GOOGLE_APPLICATION_CREDENTIALS=./firebase_service_account.json
 
+      - name: Distribute APK to Firebase App Distribution
+        run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app 1:1015924011726:android:3e6d8596c2bda420a3169f --groups testers
       - name: Build iOS
         if: runner.os == 'macOS'
         run: |
