@@ -32,19 +32,16 @@ jobs:
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
 
-      - name: Authenticate with Firebase using CI Token
+      - name: Authenticate with Firebase using Service Account
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
         run: |
-          firebase use --token $FIREBASE_TOKEN
-
-      - name: Distribute APK to Firebase App Distribution
-        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > ./firebase_service_account.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase_service_account.json
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
           --app 1:1015924011726:android:3e6d8596c2bda420a3169f \
           --groups testers \
-          --debug \
-          --token $FIREBASE_TOKEN
+          --debug
 
       - name: Build iOS
         if: runner.os == 'macOS'
