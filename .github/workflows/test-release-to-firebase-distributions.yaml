@@ -37,13 +37,12 @@ jobs:
         run: curl -sL https://firebase.tools | bash
         continue-on-error: true
 
-      - name: Build and Distribute Android App to Firebase
+      - name: Distribute Android App to Firebase
         run: |
           echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}" > ./firebase_service_account.json
           export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase_service_account.json
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
           --app 1:1015924011726:android:3e6d8596c2bda420a3169f \
-          --token "$FIREBASE_TOKEN" \
           --groups testers \
           --release-notes "Description of the release" \
           --debug
@@ -56,9 +55,9 @@ jobs:
           cd ios
           xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Release -archivePath $PWD/build/Runner.xcarchive archive
           xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/ios/ipa
+          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/../../firebase_service_account.json
           firebase appdistribution:distribute ios/build/ios/ipa/Runner.ipa \
           --app app-1-1015924011726-ios-2f2d38ddb25065ffa3169f \
-          --token "$FIREBASE_TOKEN" \
           --groups testers \
           --release-notes "Description of the release"
         continue-on-error: true
