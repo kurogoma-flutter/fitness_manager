@@ -33,6 +33,17 @@ jobs:
         run: curl -sL https://firebase.tools | bash
         continue-on-error: true
 
+      - name: Build and Distribute iOS App to Firebase
+        if: runner.os == 'macOS'
+        run: |
+          flutter build ipa --release
+          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/../../firebase_service_account.json
+          firebase appdistribution:distribute ios/build/ios/ipa/fitness_records.ipa \
+          --app app-1-1015924011726-ios-2f2d38ddb25065ffa3169f \
+          --groups testers \
+          --release-notes "Description of the release"
+        continue-on-error: true
+
       - name: Build and Distribute Android App to Firebase
         run: |
           flutter build apk --release
@@ -45,18 +56,4 @@ jobs:
           --groups testers \
           --release-notes "Description of the release" \
           --debug
-        continue-on-error: true
-
-      - name: Build and Distribute iOS App to Firebase
-        if: runner.os == 'macOS'
-        run: |
-          flutter build ios --release --no-codesign
-          cd ios
-          xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Release -archivePath $PWD/build/Runner.xcarchive archive
-          xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/ios/ipa
-          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/../../firebase_service_account.json
-          firebase appdistribution:distribute ios/build/ios/ipa/Runner.ipa \
-          --app app-1-1015924011726-ios-2f2d38ddb25065ffa3169f \
-          --groups testers \
-          --release-notes "Description of the release"
         continue-on-error: true
