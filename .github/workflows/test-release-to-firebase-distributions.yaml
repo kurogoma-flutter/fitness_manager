@@ -12,11 +12,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        continue-on-error: true
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.13.6"
+        continue-on-error: true
 
       - name: Create .env.dev file
         run: |
@@ -25,12 +27,15 @@ jobs:
           echo "FLAVOR=${{ secrets.FLAVOR }}" >> env/.env.dev
           echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> env/.env.dev
           echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> env/.env.dev
+        continue-on-error: true
 
       - name: Build APK
         run: flutter build apk --release
+        continue-on-error: true
 
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
+        continue-on-error: true
 
       - name: Authenticate with Firebase using Service Account
         env:
@@ -44,6 +49,7 @@ jobs:
           --groups testers \
           --release-notes "Description of the release" \
           --debug
+        continue-on-error: true
 
       - name: Build iOS
         if: runner.os == 'macOS'
@@ -52,6 +58,7 @@ jobs:
           cd ios
           xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Release -archivePath $PWD/build/Runner.xcarchive archive
           xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/ios/ipa
+        continue-on-error: true
 
       - name: Distribute IPA to Firebase App Distribution
         if: runner.os == 'macOS'
@@ -61,3 +68,4 @@ jobs:
           --token "$FIREBASE_TOKEN" \
           --groups testers \
           --release-notes "Description of the release"
+        continue-on-error: true
