@@ -29,16 +29,13 @@ jobs:
           echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> env/.env.dev
         continue-on-error: true
 
-      - name: Build APK
-        run: flutter build apk --release
-        continue-on-error: true
-
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
         continue-on-error: true
 
-      - name: Distribute Android App to Firebase
+      - name: Build and Distribute Android App to Firebase
         run: |
+          flutter build apk --release
           echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}" > ./firebase_service_account.json
           export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase_service_account.json
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
