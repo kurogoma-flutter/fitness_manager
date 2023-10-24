@@ -157,61 +157,49 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
                   child: const HomeHeader(),
                 ),
               ),
-              widget.state.recordList.isEmpty
-                  ? SliverPadding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      sliver: SliverToBoxAdapter(
-                        child: Center(
-                          child: MiddleHeadlineText(
-                            'レコードがありません',
-                            textColor: ColorTheme.primaryWhite,
-                          ),
-                        ),
-                      ),
-                    )
-                  : SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final record = widget.state.recordList[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: GestureDetector(
-                              onTap: () async {
-                                await AppRouter().showBottomSheet(
-                                  context,
-                                  EditItemBottomSheet(
-                                    record: record,
-                                  ),
-                                );
-                              },
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: ColorTheme.primaryCard,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 12,
-                                    top: 16,
-                                    bottom: 16,
-                                  ),
-                                  child: Text(
-                                    '${record.category} ${_loadText(record.load)}${record.weightUnitType.text} x ${record.time}${record.rmUnitType.text}',
-                                    style: TextStyle(
-                                      color: ColorTheme.primaryText,
-                                      fontSize: 15,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final record = widget.state.recordList[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: GestureDetector(
+                        onTap: () async {
+                          await AppRouter().showBottomSheet(
+                            context,
+                            EditItemBottomSheet(
+                              record: record,
                             ),
                           );
                         },
-                        childCount: widget.state.recordList.length,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: ColorTheme.primaryCard,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12,
+                              top: 16,
+                              bottom: 16,
+                            ),
+                            child: Text(
+                              '${record.category} ${_loadText(record.load)}${record.weightUnitType.text} x ${record.time}${record.rmUnitType.text}',
+                              style: TextStyle(
+                                color: ColorTheme.primaryText,
+                                fontSize: 15,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    );
+                  },
+                  childCount: widget.state.recordList.length,
+                ),
+              ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 sliver: SliverToBoxAdapter(
