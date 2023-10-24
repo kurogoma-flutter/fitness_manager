@@ -118,9 +118,10 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
               SliverToBoxAdapter(
                 child: ShowCaseItem(
                   itemKey: _three,
+                  width: MediaQuery.sizeOf(context).width - 32,
                   containerMessage:
                       'あなたのコミットログはこちらから確認できます！\nコミット量に応じて色が濃くなります！',
-                  containerAlignment: CrossAxisAlignment.end,
+                  containerAlignment: CrossAxisAlignment.center,
                   child: Row(
                     children: [
                       Expanded(
@@ -149,9 +150,10 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
               SliverToBoxAdapter(
                 child: ShowCaseItem(
                   itemKey: _two,
+                  width: MediaQuery.sizeOf(context).width - 32,
                   containerMessage:
                       'あなたがトレーニング中に視聴するお気に入り動画を\nMy Fitnessに登録しましょう！',
-                  containerAlignment: CrossAxisAlignment.end,
+                  containerAlignment: CrossAxisAlignment.center,
                   child: const HomeHeader(),
                 ),
               ),
@@ -215,9 +217,10 @@ class __HomePageViewState extends ConsumerState<_HomePageView> {
                 sliver: SliverToBoxAdapter(
                   child: ShowCaseItem(
                     itemKey: _one,
+                    width: MediaQuery.sizeOf(context).width - 32,
                     containerMessage:
                         'こちらから、あなたの記録を登録していきましょう！\nコツコツベストを更新できるよう応援します',
-                    containerAlignment: CrossAxisAlignment.end,
+                    containerAlignment: CrossAxisAlignment.center,
                     child: ElevatedButton(
                       onPressed: () async {
                         await AppRouter().showBottomSheet(
@@ -298,11 +301,14 @@ class ShowCaseItem extends StatelessWidget {
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  ShowCaseWidget.of(context).next();
-                },
-                child: const Text('次へ'),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width - 32,
+                child: ElevatedButton(
+                  onPressed: () {
+                    ShowCaseWidget.of(context).next();
+                  },
+                  child: const Text('次へ'),
+                ),
               ),
             ],
           ),

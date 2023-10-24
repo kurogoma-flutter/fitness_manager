@@ -19,6 +19,7 @@ class HeatMapHeader extends ConsumerWidget {
         children: [
           ShowCaseItem(
             itemKey: four,
+            width: MediaQuery.sizeOf(context).width - 32,
             containerMessage: '直近3年間のデータを切り替えることができます',
             child: TextButton(
               onPressed: () async {
