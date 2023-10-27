@@ -51,6 +51,14 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
     return load.toString();
   }
 
+  bool get ableToTapUpdateButton =>
+      textFormKeyEdit.currentState!.value != null &&
+      textFormKeyEdit.currentState!.value != '' &&
+      weightKeyEdit.currentState!.value != null &&
+      weightKeyEdit.currentState!.value != '' &&
+      repKeyEdit.currentState!.value != null &&
+      repKeyEdit.currentState!.value != '';
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -282,9 +290,7 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    if (textFormKeyEdit.currentState!.value == null ||
-                        weightKeyEdit.currentState!.value == null ||
-                        repKeyEdit.currentState!.value == null) {
+                    if (ableToTapUpdateButton) {
                       return;
                     }
 

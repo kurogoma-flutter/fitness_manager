@@ -24,11 +24,11 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
   RmUnitType selectedRmType = RmUnitType.times;
 
   bool get ableToTapSubmitButton =>
-      textFormKey.currentState?.value == null ||
-      textFormKey.currentState?.value == '' ||
-      weightKey.currentState?.value == null ||
-      weightKey.currentState?.value == '' ||
-      repKey.currentState?.value == null ||
+      textFormKey.currentState?.value == null &&
+      textFormKey.currentState?.value == '' &&
+      weightKey.currentState?.value == null &&
+      weightKey.currentState?.value == '' &&
+      repKey.currentState?.value == null &&
       repKey.currentState?.value == '';
 
   @override
