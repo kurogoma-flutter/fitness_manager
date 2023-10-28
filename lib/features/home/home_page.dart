@@ -5,7 +5,6 @@ import 'package:showcaseview/showcaseview.dart';
 import '../../core/logger/logger.dart';
 import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
-import '../component/text/middle_headline_text.dart';
 import 'components/create_item_bottom_sheet.dart';
 import 'components/edit_item_bottom_sheet.dart';
 import 'components/heatmap.dart';
