@@ -7,6 +7,8 @@ final weightKey = GlobalKey<FormFieldState<String>>();
 final weightKeyEdit = GlobalKey<FormFieldState<String>>();
 final repKey = GlobalKey<FormFieldState<String>>();
 final repKeyEdit = GlobalKey<FormFieldState<String>>();
+final memoKey = GlobalKey<FormFieldState<String>>();
+final memoKeyEdit = GlobalKey<FormFieldState<String>>();
 
 // My Fitness
 final myFitnessFormKey = GlobalKey<FormState>();

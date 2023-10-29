@@ -71,7 +71,7 @@ class InputTextForm extends StatelessWidget {
       validator: validator,
       initialValue: initialValue,
       formHintText: formHintText,
-      maxLines: 8,
+      maxLines: 4,
       inputType: inputType,
       maxLength: maxLength,
       counterText: counterText,

@@ -56,7 +56,10 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
     required WeightUnitType weightUnitType,
     required int time,
     required RmUnitType rmUnitType,
+    required String? memo,
   }) async {
+    logger.d(memo);
+
     final now = DateTime.now();
     final record = Record()
       ..category = category
@@ -64,6 +67,7 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
       ..weightUnitType = weightUnitType
       ..time = time
       ..rmUnitType = rmUnitType
+      ..memo = memo
       ..createdAt = now
       ..updatedAt = now;
 
@@ -80,7 +84,9 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
     required WeightUnitType weightUnitType,
     required int time,
     required RmUnitType rmUnitType,
+    required String? memo,
   }) async {
+    logger.d(memo);
     final now = DateTime.now();
     targetRecord
       ..category = category
@@ -88,7 +94,8 @@ class HomePageViewModel extends StateNotifier<HomePageState> {
       ..weightUnitType = weightUnitType
       ..time = time
       ..rmUnitType = rmUnitType
-      ..updatedAt = now;
+      ..updatedAt = now
+      ..memo = memo;
     await _dataSource.setRecordData(recordModel: targetRecord);
     await setMyTrack();
     await fetchHeatmapData();

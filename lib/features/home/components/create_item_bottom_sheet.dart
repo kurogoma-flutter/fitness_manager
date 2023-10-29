@@ -24,12 +24,12 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
   RmUnitType selectedRmType = RmUnitType.times;
 
   bool get ableToTapSubmitButton =>
-      textFormKey.currentState?.value == null &&
-      textFormKey.currentState?.value == '' &&
-      weightKey.currentState?.value == null &&
-      weightKey.currentState?.value == '' &&
-      repKey.currentState?.value == null &&
-      repKey.currentState?.value == '';
+      textFormKey.currentState?.value != null &&
+      textFormKey.currentState?.value != '' &&
+      weightKey.currentState?.value != null &&
+      weightKey.currentState?.value != '' &&
+      repKey.currentState?.value != null &&
+      repKey.currentState?.value != '';
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
       alignment: Alignment.topCenter,
       children: [
         Container(
-          height: MediaQuery.sizeOf(context).height * 0.6,
+          height: MediaQuery.sizeOf(context).height * 0.75,
           width: MediaQuery.sizeOf(context).width,
           padding: const EdgeInsets.only(
             top: 24,
@@ -79,7 +79,9 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                                 textFormKey: textFormKey,
                                 validator: (text) => null,
                                 onChanged: (value) {
-                                  textFormKey.currentState!.didChange(value);
+                                  setState(() {
+                                    textFormKey.currentState!.didChange(value);
+                                  });
                                 },
                               ),
                             ),
@@ -138,9 +140,11 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                             return;
                           }
                           // 数字、小数点以外は消去する
-                          weightKey.currentState!.didChange(
-                            value.replaceAll(RegExp(r'[^0-9.]'), ''),
-                          );
+                          setState(() {
+                            weightKey.currentState!.didChange(
+                              value.replaceAll(RegExp(r'[^0-9.]'), ''),
+                            );
+                          });
                           return;
                         },
                       ),
@@ -204,9 +208,12 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                             return;
                           }
                           // 数字以外は消去する
-                          repKey.currentState!.didChange(
-                            value.replaceAll(RegExp(r'[^0-9]'), ''),
-                          );
+                          setState(() {
+                            repKey.currentState!.didChange(
+                              value.replaceAll(RegExp(r'[^0-9]'), ''),
+                            );
+                          });
+
                           return;
                         },
                       ),
@@ -255,35 +262,56 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                     ),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Text(
+                    'メモ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: ColorTheme.primaryText,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+                InputTextForm.multiLine(
+                  textFormKey: memoKey,
+                  validator: (_) => null,
+                  maxLength: 500,
+                  onChanged: (value) {
+                    setState(() {
+                      memoKey.currentState!.didChange(value);
+                    });
+                  },
+                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
-                    if (ableToTapSubmitButton) {
-                      return;
-                    }
-
-                    ref.read(homePageViewModelProvider.notifier).addNewRecord(
-                          category: textFormKey.currentState!.value!,
-                          load: double.parse(
-                            double.parse(
-                              weightKey.currentState!.value!,
-                            ).toStringAsFixed(1),
-                          ),
-                          weightUnitType: selectedWightType,
-                          time: int.parse(
-                            repKey.currentState!.value!,
-                          ),
-                          rmUnitType: selectedRmType,
-                        );
-                    if (!mounted) {
-                      return;
-                    }
-                    Navigator.pop(context);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      ColorTheme.secondaryButton,
-                    ),
+                  onPressed: ableToTapSubmitButton
+                      ? () {
+                          ref
+                              .read(homePageViewModelProvider.notifier)
+                              .addNewRecord(
+                                category: textFormKey.currentState!.value!,
+                                load: double.parse(
+                                  double.parse(
+                                    weightKey.currentState!.value!,
+                                  ).toStringAsFixed(1),
+                                ),
+                                weightUnitType: selectedWightType,
+                                time: int.parse(
+                                  repKey.currentState!.value!,
+                                ),
+                                rmUnitType: selectedRmType,
+                                memo: memoKey.currentState?.value,
+                              );
+                          if (!mounted) {
+                            return;
+                          }
+                          Navigator.pop(context);
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorTheme.primaryActive,
+                    disabledBackgroundColor: ColorTheme.secondaryButton,
                   ),
                   child: Text(
                     '登録する',
@@ -294,7 +322,7 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.3,
+                  height: MediaQuery.sizeOf(context).height * 0.05,
                 ),
               ],
             ),

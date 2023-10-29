@@ -32,29 +32,34 @@ const RecordSchema = CollectionSchema(
       name: r'load',
       type: IsarType.double,
     ),
-    r'num': PropertySchema(
+    r'memo': PropertySchema(
       id: 3,
+      name: r'memo',
+      type: IsarType.string,
+    ),
+    r'num': PropertySchema(
+      id: 4,
       name: r'num',
       type: IsarType.long,
     ),
     r'rmUnitType': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'rmUnitType',
       type: IsarType.byte,
       enumMap: _RecordrmUnitTypeEnumValueMap,
     ),
     r'time': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'time',
       type: IsarType.long,
     ),
     r'updatedAt': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'weightUnitType': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'weightUnitType',
       type: IsarType.byte,
       enumMap: _RecordweightUnitTypeEnumValueMap,
@@ -95,6 +100,12 @@ int _recordEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.category.length * 3;
+  {
+    final value = object.memo;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -107,11 +118,12 @@ void _recordSerialize(
   writer.writeString(offsets[0], object.category);
   writer.writeDateTime(offsets[1], object.createdAt);
   writer.writeDouble(offsets[2], object.load);
-  writer.writeLong(offsets[3], object.num);
-  writer.writeByte(offsets[4], object.rmUnitType.index);
-  writer.writeLong(offsets[5], object.time);
-  writer.writeDateTime(offsets[6], object.updatedAt);
-  writer.writeByte(offsets[7], object.weightUnitType.index);
+  writer.writeString(offsets[3], object.memo);
+  writer.writeLong(offsets[4], object.num);
+  writer.writeByte(offsets[5], object.rmUnitType.index);
+  writer.writeLong(offsets[6], object.time);
+  writer.writeDateTime(offsets[7], object.updatedAt);
+  writer.writeByte(offsets[8], object.weightUnitType.index);
 }
 
 Record _recordDeserialize(
@@ -125,14 +137,15 @@ Record _recordDeserialize(
   object.createdAt = reader.readDateTime(offsets[1]);
   object.id = id;
   object.load = reader.readDouble(offsets[2]);
-  object.num = reader.readLong(offsets[3]);
+  object.memo = reader.readStringOrNull(offsets[3]);
+  object.num = reader.readLong(offsets[4]);
   object.rmUnitType =
-      _RecordrmUnitTypeValueEnumMap[reader.readByteOrNull(offsets[4])] ??
+      _RecordrmUnitTypeValueEnumMap[reader.readByteOrNull(offsets[5])] ??
           RmUnitType.times;
-  object.time = reader.readLong(offsets[5]);
-  object.updatedAt = reader.readDateTime(offsets[6]);
+  object.time = reader.readLong(offsets[6]);
+  object.updatedAt = reader.readDateTime(offsets[7]);
   object.weightUnitType =
-      _RecordweightUnitTypeValueEnumMap[reader.readByteOrNull(offsets[7])] ??
+      _RecordweightUnitTypeValueEnumMap[reader.readByteOrNull(offsets[8])] ??
           WeightUnitType.kg;
   return object;
 }
@@ -151,15 +164,17 @@ P _recordDeserializeProp<P>(
     case 2:
       return (reader.readDouble(offset)) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
+      return (reader.readLong(offset)) as P;
+    case 5:
       return (_RecordrmUnitTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           RmUnitType.times) as P;
-    case 5:
-      return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
+      return (reader.readDateTime(offset)) as P;
+    case 8:
       return (_RecordweightUnitTypeValueEnumMap[
               reader.readByteOrNull(offset)] ??
           WeightUnitType.kg) as P;
@@ -670,6 +685,151 @@ extension RecordQueryFilter on QueryBuilder<Record, Record, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'memo',
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'memo',
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'memo',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'memo',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'memo',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'memo',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'memo',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'memo',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'memo',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'memo',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'memo',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterFilterCondition> memoIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'memo',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Record, Record, QAfterFilterCondition> numEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -975,6 +1135,18 @@ extension RecordQuerySortBy on QueryBuilder<Record, Record, QSortBy> {
     });
   }
 
+  QueryBuilder<Record, Record, QAfterSortBy> sortByMemo() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'memo', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterSortBy> sortByMemoDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'memo', Sort.desc);
+    });
+  }
+
   QueryBuilder<Record, Record, QAfterSortBy> sortByNum() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'num', Sort.asc);
@@ -1085,6 +1257,18 @@ extension RecordQuerySortThenBy on QueryBuilder<Record, Record, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Record, Record, QAfterSortBy> thenByMemo() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'memo', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Record, Record, QAfterSortBy> thenByMemoDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'memo', Sort.desc);
+    });
+  }
+
   QueryBuilder<Record, Record, QAfterSortBy> thenByNum() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'num', Sort.asc);
@@ -1166,6 +1350,13 @@ extension RecordQueryWhereDistinct on QueryBuilder<Record, Record, QDistinct> {
     });
   }
 
+  QueryBuilder<Record, Record, QDistinct> distinctByMemo(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'memo', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<Record, Record, QDistinct> distinctByNum() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'num');
@@ -1219,6 +1410,12 @@ extension RecordQueryProperty on QueryBuilder<Record, Record, QQueryProperty> {
   QueryBuilder<Record, double, QQueryOperations> loadProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'load');
+    });
+  }
+
+  QueryBuilder<Record, String?, QQueryOperations> memoProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'memo');
     });
   }
 

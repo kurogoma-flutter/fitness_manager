@@ -23,6 +23,8 @@ class Record {
   @enumerated
   late RmUnitType rmUnitType;
 
+  late String? memo;
+
   late DateTime createdAt;
 
   @Index()

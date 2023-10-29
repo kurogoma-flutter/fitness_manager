@@ -32,10 +32,11 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
   @override
   void didChangeDependencies() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      textFormKeyEdit.currentState!.didChange(widget.record.category);
-      weightKeyEdit.currentState!.didChange(_loadText(widget.record.load));
-      repKeyEdit.currentState!.didChange(widget.record.time.toString());
       setState(() {
+        textFormKeyEdit.currentState!.didChange(widget.record.category);
+        weightKeyEdit.currentState!.didChange(_loadText(widget.record.load));
+        repKeyEdit.currentState!.didChange(widget.record.time.toString());
+        memoKeyEdit.currentState!.didChange(widget.record.memo);
         selectedWightType = widget.record.weightUnitType;
         selectedRmType = widget.record.rmUnitType;
       });
@@ -52,12 +53,12 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
   }
 
   bool get ableToTapUpdateButton =>
-      textFormKeyEdit.currentState!.value != null &&
-      textFormKeyEdit.currentState!.value != '' &&
-      weightKeyEdit.currentState!.value != null &&
-      weightKeyEdit.currentState!.value != '' &&
-      repKeyEdit.currentState!.value != null &&
-      repKeyEdit.currentState!.value != '';
+      textFormKeyEdit.currentState?.value != null &&
+      textFormKeyEdit.currentState?.value != '' &&
+      weightKeyEdit.currentState?.value != null &&
+      weightKeyEdit.currentState?.value != '' &&
+      repKeyEdit.currentState?.value != null &&
+      repKeyEdit.currentState?.value != '';
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,7 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
       alignment: Alignment.topCenter,
       children: [
         Container(
-          height: MediaQuery.sizeOf(context).height * 0.6,
+          height: MediaQuery.sizeOf(context).height * 0.75,
           width: MediaQuery.sizeOf(context).width,
           padding: const EdgeInsets.only(
             top: 24,
@@ -110,8 +111,10 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
                                   if (value == null) {
                                     return;
                                   }
-                                  textFormKeyEdit.currentState!
-                                      .didChange(value);
+                                  setState(() {
+                                    textFormKeyEdit.currentState!
+                                        .didChange(value);
+                                  });
                                 },
                               ),
                             ),
@@ -170,9 +173,11 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
                             return;
                           }
                           // 数字、小数点以外は消去する
-                          weightKeyEdit.currentState!.didChange(
-                            value.replaceAll(RegExp(r'[^0-9.]'), ''),
-                          );
+                          setState(() {
+                            weightKeyEdit.currentState!.didChange(
+                              value.replaceAll(RegExp(r'[^0-9.]'), ''),
+                            );
+                          });
                           return;
                         },
                       ),
@@ -236,9 +241,11 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
                             return;
                           }
                           // 数字以外は消去する
-                          repKeyEdit.currentState!.didChange(
-                            value.replaceAll(RegExp(r'[^0-9]'), ''),
-                          );
+                          setState(() {
+                            repKeyEdit.currentState!.didChange(
+                              value.replaceAll(RegExp(r'[^0-9]'), ''),
+                            );
+                          });
                           return;
                         },
                       ),
@@ -287,36 +294,58 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
                     ),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Text(
+                    'メモ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: ColorTheme.primaryText,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+                InputTextForm.multiLine(
+                  initialValue: widget.record.memo ?? '',
+                  textFormKey: memoKeyEdit,
+                  validator: (_) => null,
+                  maxLength: 500,
+                  onChanged: (value) {
+                    setState(() {
+                      memoKeyEdit.currentState!.didChange(value);
+                    });
+                  },
+                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
-                    if (ableToTapUpdateButton) {
-                      return;
-                    }
-
-                    ref.read(homePageViewModelProvider.notifier).updateRecord(
-                          targetRecord: widget.record,
-                          category: textFormKeyEdit.currentState!.value!,
-                          load: double.parse(
-                            double.parse(
-                              weightKeyEdit.currentState!.value!,
-                            ).toStringAsFixed(1),
-                          ),
-                          weightUnitType: selectedWightType,
-                          time: int.parse(
-                            repKeyEdit.currentState!.value!,
-                          ),
-                          rmUnitType: selectedRmType,
-                        );
-                    if (!mounted) {
-                      return;
-                    }
-                    Navigator.pop(context);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      ColorTheme.secondaryButton,
-                    ),
+                  onPressed: ableToTapUpdateButton
+                      ? () {
+                          ref
+                              .read(homePageViewModelProvider.notifier)
+                              .updateRecord(
+                                targetRecord: widget.record,
+                                category: textFormKeyEdit.currentState!.value!,
+                                load: double.parse(
+                                  double.parse(
+                                    weightKeyEdit.currentState!.value!,
+                                  ).toStringAsFixed(1),
+                                ),
+                                weightUnitType: selectedWightType,
+                                time: int.parse(
+                                  repKeyEdit.currentState!.value!,
+                                ),
+                                rmUnitType: selectedRmType,
+                                memo: memoKeyEdit.currentState?.value,
+                              );
+                          if (!mounted) {
+                            return;
+                          }
+                          Navigator.pop(context);
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorTheme.primaryActive,
+                    disabledBackgroundColor: ColorTheme.secondaryButton,
                   ),
                   child: Text(
                     '更新する',
@@ -327,7 +356,7 @@ class _EditItemBottomSheetState extends ConsumerState<EditItemBottomSheet> {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.3,
+                  height: MediaQuery.sizeOf(context).height * 0.05,
                 ),
               ],
             ),
