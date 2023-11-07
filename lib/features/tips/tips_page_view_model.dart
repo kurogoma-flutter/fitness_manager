@@ -14,11 +14,13 @@ final tipPageViewModelProvider =
 class TipPageViewModel extends StateNotifier<TipsPageState> {
   TipPageViewModel() : super(const TipsPageState());
 
-  Future<void> fetchTipList() async {
+  Future<void> fetchTipList({required int page}) async {
     try {
       final supabase = Supabase.instance.client;
-      final response =
-          await supabase.from('tips').select<List<Map<String, dynamic>>>();
+      final response = await supabase
+          .from('tips')
+          .select<List<Map<String, dynamic>>>()
+          .range(20 * (page - 1) + 1, 20 * page);
 
       if (response.isEmpty) {
         state = state.copyWith(tipList: localTipList);
@@ -27,7 +29,7 @@ class TipPageViewModel extends StateNotifier<TipsPageState> {
 
       final tipList = response.map(TipItem.fromJson).toList();
 
-      state = state.copyWith(tipList: tipList);
+      state = state.copyWith(tipList: [...state.tipList, ...tipList]);
       // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       logger.e(e);

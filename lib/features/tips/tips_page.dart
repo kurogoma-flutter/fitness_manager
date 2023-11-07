@@ -16,16 +16,32 @@ class TipsPage extends StatefulHookConsumerWidget {
 }
 
 class _TipsPageState extends ConsumerState<TipsPage> {
+  int page = 1;
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(tipPageViewModelProvider.notifier).fetchTipList();
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(tipPageViewModelProvider.notifier).fetchTipList(page: page);
+    });
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      page++;
+      ref.read(tipPageViewModelProvider.notifier).fetchTipList(page: page);
+    }
   }
 
   @override
   void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
     super.dispose();
   }
 
@@ -39,6 +55,7 @@ class _TipsPageState extends ConsumerState<TipsPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: GridView.builder(
+            controller: _scrollController,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 12,
@@ -76,6 +93,14 @@ class _TipsPageState extends ConsumerState<TipsPage> {
                             child: Image.network(
                               state.tipList[index].thumbnailUrl,
                               fit: BoxFit.fitWidth,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Center(
+                                  child: Icon(
+                                    Icons.error,
+                                    color: ColorTheme.primaryText,
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
