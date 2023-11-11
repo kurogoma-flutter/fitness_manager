@@ -106,12 +106,12 @@ class SecondaryButton extends StatefulWidget {
   const SecondaryButton._({
     required this.onTap,
     required this.iconPosition,
-    Key? key,
+    super.key,
     this.text = '',
     this.buttonSizeType = ButtonSizeType.normal,
     this.icon,
     this.isActive = true,
-  }) : super(key: key);
+  });
 
   /// タップされた時の処理
   final AsyncCallback onTap;

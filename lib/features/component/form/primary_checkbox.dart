@@ -11,8 +11,8 @@ class PrimaryCheckBox extends StatefulWidget {
     required this.onTap,
     required this.text,
     required this.status,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// タップされた時の処理
   final AsyncValueSetter<bool> onTap;

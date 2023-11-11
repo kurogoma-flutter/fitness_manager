@@ -10,8 +10,8 @@ import 'exception/server_error.dart';
 class CustomApiException extends ServerError {
   CustomApiException._({
     required ErrorCode errorCode,
-    required int statusCode,
-  }) : super(error: errorCode, statusCode: statusCode);
+    required super.statusCode,
+  }) : super(error: errorCode);
 
   factory CustomApiException.fromDioError(DioException error) {
     final response = error.response;

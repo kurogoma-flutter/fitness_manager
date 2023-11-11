@@ -7,8 +7,8 @@ import '../color.dart';
 class TextWithUrl extends StatelessWidget {
   const TextWithUrl({
     required this.text,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String text;
 

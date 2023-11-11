@@ -84,7 +84,6 @@ class InputTextForm extends StatelessWidget {
     required this.textFormKey,
     required this.validator,
     required this.onChanged,
-    Key? key,
     this.initialValue = '',
     this.formHintText = '入力してください',
     this.autoValidateMode = AutovalidateMode.onUserInteraction,
@@ -96,7 +95,7 @@ class InputTextForm extends StatelessWidget {
     this.counterText,
     this.errorText,
     this.fillColor,
-  }) : super(key: key);
+  });
 
   /// バリデーター動作設定
   final AutovalidateMode autoValidateMode;

@@ -10,8 +10,8 @@ class RadioButton<T> extends StatefulWidget {
     required this.value,
     required this.groupValue,
     required this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// ラジオボタンのラベル
   final T value;

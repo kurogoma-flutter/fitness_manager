@@ -19,7 +19,7 @@ class TipPageViewModel extends StateNotifier<TipsPageState> {
       final supabase = Supabase.instance.client;
       final response = await supabase
           .from('tips')
-          .select<List<Map<String, dynamic>>>()
+          .select()
           .range(20 * (page - 1) + 1, 20 * page);
 
       if (response.isEmpty) {

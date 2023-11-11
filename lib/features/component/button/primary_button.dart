@@ -106,12 +106,12 @@ class PrimaryButton extends StatefulWidget {
   const PrimaryButton._({
     required this.onTap,
     required this.iconPosition,
-    Key? key,
+    super.key,
     this.buttonSizeType = ButtonSizeType.normal,
     this.text = '',
     this.icon,
     this.isActive = true,
-  }) : super(key: key);
+  });
 
   /// タップされた時の処理
   final AsyncCallback onTap;

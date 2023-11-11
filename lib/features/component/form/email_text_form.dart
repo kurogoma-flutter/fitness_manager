@@ -5,9 +5,9 @@ import '../color.dart';
 class EmailTextForm extends StatelessWidget {
   const EmailTextForm({
     required this.globalKey,
-    Key? key,
+    super.key,
     this.hint = 'example@gmail.com',
-  }) : super(key: key);
+  });
 
   final GlobalKey globalKey;
   final String hint;

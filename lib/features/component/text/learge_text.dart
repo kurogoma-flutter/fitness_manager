@@ -15,13 +15,12 @@ import '../color.dart';
 class LargeText extends StatelessWidget {
   const LargeText(
     this.text, {
-    Key? key,
+    super.key,
     Color? textColor,
     this.maxLine,
     this.textOverflow = TextOverflow.ellipsis,
     this.textAlign,
-  })  : _textColor = textColor ?? CustomColor.white,
-        super(key: key);
+  }) : _textColor = textColor ?? CustomColor.white;
 
   /// 表示テキスト
   final String text;

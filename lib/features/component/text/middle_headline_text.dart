@@ -5,12 +5,11 @@ import '../color.dart';
 class MiddleHeadlineText extends StatelessWidget {
   const MiddleHeadlineText(
     this.text, {
-    Key? key,
+    super.key,
     Color? textColor,
     this.maxLine,
     this.textOverflow = TextOverflow.ellipsis,
-  })  : _textColor = textColor ?? CustomColor.white,
-        super(key: key);
+  }) : _textColor = textColor ?? CustomColor.white;
 
   /// 表示テキスト
   final String text;

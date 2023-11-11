@@ -15,12 +15,11 @@ import '../color.dart';
 class LargeHeadLineText extends StatelessWidget {
   const LargeHeadLineText(
     this.text, {
-    Key? key,
+    super.key,
     Color? textColor,
     this.maxLine,
     this.textOverflow = TextOverflow.ellipsis,
-  })  : _textColor = textColor ?? CustomColor.white,
-        super(key: key);
+  }) : _textColor = textColor ?? CustomColor.white;
 
   /// 表示テキスト
   final String text;

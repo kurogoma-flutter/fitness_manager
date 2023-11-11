@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class CachedImage extends StatelessWidget {
   const CachedImage({
     required this.imageUrl,
-    Key? key,
+    super.key,
     this.fit = BoxFit.fitHeight,
-  }) : super(key: key);
+  });
 
   // 画像URL
   final String imageUrl;
