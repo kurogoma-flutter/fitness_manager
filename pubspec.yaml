@@ -68,5 +68,5 @@ flutter_launcher_icons:
   adaptive_icon_foreground: "assets/images/fitness-record-android.png"
 
 flutter_native_splash:
-  image: "assets/images/kurogoma-splash.png"
+  image: "assets/images/track-peak-splash.png"
   color: "D8D8D8"
