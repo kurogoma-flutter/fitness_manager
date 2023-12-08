@@ -42,7 +42,7 @@ class BackupDataDialog extends StatelessWidget {
                     color: ColorTheme.primaryText,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 Text(
                   '再取得用のメールアドレスを設定してください',
                   style: TextStyle(
@@ -59,7 +59,7 @@ class BackupDataDialog extends StatelessWidget {
                     buckUpEmail.currentState!.didChange(value);
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

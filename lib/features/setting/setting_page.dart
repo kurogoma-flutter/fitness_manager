@@ -80,7 +80,7 @@ class SettingPage extends ConsumerWidget {
                 },
               ),
               SettingListTile(
-                label: 'バックアップをとる',
+                label: 'バックアップ',
                 onTap: () async {
                   await showDialog(
                     context: context,
