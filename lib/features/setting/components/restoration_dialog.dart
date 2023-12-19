@@ -5,8 +5,8 @@ import '../../../core/router/app_router.dart';
 import '../../component/color/color_theme.dart';
 import '../../component/form/input_text_form.dart';
 
-class BackupDataDialog extends StatelessWidget {
-  const BackupDataDialog({
+class RestorationDialog extends StatelessWidget {
+  const RestorationDialog({
     super.key,
   });
 
@@ -26,16 +26,16 @@ class BackupDataDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  'バックアップ取得',
+                  'レコード復元',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: ColorTheme.primaryText,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 Text(
-                  'あなたのレコードのバックアップを作成しますか？',
+                  'バックアップデータからレコードデータを復元しますか？',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
@@ -45,7 +45,7 @@ class BackupDataDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'バックアップ時に登録したメールアドレスを設定してください',
+                  'バックアップで設定したメールアドレスを入力',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
