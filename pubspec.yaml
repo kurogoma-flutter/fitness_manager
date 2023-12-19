@@ -33,6 +33,7 @@ dependencies:
   package_info_plus: ^5.0.1
   path_provider: ^2.0.15
   shared_preferences: ^2.0.15
+  shimmer: ^3.0.0
   showcaseview: ^2.0.3
   supabase_flutter: ^2.0.2
   url_launcher: ^6.1.6

@@ -8,5 +8,6 @@ part 'tips_page_state.freezed.dart';
 class TipsPageState with _$TipsPageState {
   const factory TipsPageState({
     @Default([]) List<TipItem> tipList,
+    @Default(false) bool isLoading,
   }) = _TipsPageState;
 }

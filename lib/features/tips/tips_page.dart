@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../core/router/app_router.dart';
 import '../component/color/color_theme.dart';
@@ -48,6 +49,10 @@ class _TipsPageState extends ConsumerState<TipsPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(tipPageViewModelProvider);
+
+    if (state.isLoading) {
+      return const _LoadingSimmerView();
+    }
 
     return Scaffold(
       backgroundColor: ColorTheme.primaryBackGround,
@@ -124,6 +129,40 @@ class _TipsPageState extends ConsumerState<TipsPage> {
               );
             },
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LoadingSimmerView extends StatelessWidget {
+  const _LoadingSimmerView();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.expand(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+          ),
+          itemBuilder: (context, index) {
+            return Shimmer.fromColors(
+              baseColor: ColorTheme.primaryCard,
+              highlightColor: ColorTheme.secondaryBlack,
+              direction: ShimmerDirection.ltr,
+              period: const Duration(milliseconds: 800),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: ColorTheme.primaryCard,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

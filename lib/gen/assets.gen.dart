@@ -50,10 +50,6 @@ class $AssetsImagesGen {
   AssetGenImage get homeIcon =>
       const AssetGenImage('assets/images/home-icon.png');
 
-  /// File path: assets/images/kurogoma-splash.png
-  AssetGenImage get kurogomaSplash =>
-      const AssetGenImage('assets/images/kurogoma-splash.png');
-
   /// File path: assets/images/list_choice_tooltip.png
   AssetGenImage get listChoiceTooltip =>
       const AssetGenImage('assets/images/list_choice_tooltip.png');
@@ -95,7 +91,6 @@ class $AssetsImagesGen {
         gymBackground,
         homeIconActive,
         homeIcon,
-        kurogomaSplash,
         listChoiceTooltip,
         loadingLipple,
         myVideoIcon,

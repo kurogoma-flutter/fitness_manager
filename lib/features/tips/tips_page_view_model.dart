@@ -15,6 +15,7 @@ class TipPageViewModel extends StateNotifier<TipsPageState> {
   TipPageViewModel() : super(const TipsPageState());
 
   Future<void> fetchTipList({required int page}) async {
+    state = state.copyWith(isLoading: true);
     try {
       final supabase = Supabase.instance.client;
       final response = await supabase
@@ -34,6 +35,8 @@ class TipPageViewModel extends StateNotifier<TipsPageState> {
     } catch (e) {
       logger.e(e);
       state = state.copyWith(tipList: localTipList);
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
   }
 }

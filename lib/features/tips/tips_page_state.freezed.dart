@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TipsPageState {
   List<TipItem> get tipList => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TipsPageStateCopyWith<TipsPageState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $TipsPageStateCopyWith<$Res> {
           TipsPageState value, $Res Function(TipsPageState) then) =
       _$TipsPageStateCopyWithImpl<$Res, TipsPageState>;
   @useResult
-  $Res call({List<TipItem> tipList});
+  $Res call({List<TipItem> tipList, bool isLoading});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$TipsPageStateCopyWithImpl<$Res, $Val extends TipsPageState>
   @override
   $Res call({
     Object? tipList = null,
+    Object? isLoading = null,
   }) {
     return _then(_value.copyWith(
       tipList: null == tipList
           ? _value.tipList
           : tipList // ignore: cast_nullable_to_non_nullable
               as List<TipItem>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$_TipsPageStateCopyWith<$Res>
       __$$_TipsPageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<TipItem> tipList});
+  $Res call({List<TipItem> tipList, bool isLoading});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$_TipsPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? tipList = null,
+    Object? isLoading = null,
   }) {
     return _then(_$_TipsPageState(
       tipList: null == tipList
           ? _value._tipList
           : tipList // ignore: cast_nullable_to_non_nullable
               as List<TipItem>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -92,7 +103,8 @@ class __$$_TipsPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_TipsPageState implements _TipsPageState {
-  const _$_TipsPageState({final List<TipItem> tipList = const []})
+  const _$_TipsPageState(
+      {final List<TipItem> tipList = const [], this.isLoading = false})
       : _tipList = tipList;
 
   final List<TipItem> _tipList;
@@ -105,8 +117,12 @@ class _$_TipsPageState implements _TipsPageState {
   }
 
   @override
+  @JsonKey()
+  final bool isLoading;
+
+  @override
   String toString() {
-    return 'TipsPageState(tipList: $tipList)';
+    return 'TipsPageState(tipList: $tipList, isLoading: $isLoading)';
   }
 
   @override
@@ -114,12 +130,14 @@ class _$_TipsPageState implements _TipsPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TipsPageState &&
-            const DeepCollectionEquality().equals(other._tipList, _tipList));
+            const DeepCollectionEquality().equals(other._tipList, _tipList) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_tipList));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_tipList), isLoading);
 
   @JsonKey(ignore: true)
   @override
@@ -129,11 +147,13 @@ class _$_TipsPageState implements _TipsPageState {
 }
 
 abstract class _TipsPageState implements TipsPageState {
-  const factory _TipsPageState({final List<TipItem> tipList}) =
-      _$_TipsPageState;
+  const factory _TipsPageState(
+      {final List<TipItem> tipList, final bool isLoading}) = _$_TipsPageState;
 
   @override
   List<TipItem> get tipList;
+  @override
+  bool get isLoading;
   @override
   @JsonKey(ignore: true)
   _$$_TipsPageStateCopyWith<_$_TipsPageState> get copyWith =>
