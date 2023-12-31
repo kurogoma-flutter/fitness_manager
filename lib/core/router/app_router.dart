@@ -60,6 +60,7 @@ class AppRouter {
 
   Future<void> showBottomSheet(BuildContext context, Widget body) {
     return showModalBottomSheet<dynamic>(
+      useRootNavigator: true,
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
