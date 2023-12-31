@@ -98,6 +98,9 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                                 }
                                 // 種目フィールドに入力
                                 logger.d('result: $result');
+                                if (textFormKey.currentState == null) {
+                                  return;
+                                }
                                 textFormKey.currentState!.didChange(result);
                               },
                               icon: const Icon(Icons.add),
@@ -317,7 +320,9 @@ class _CreateItemBottomSheetState extends ConsumerState<CreateItemBottomSheet> {
                     '登録する',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: ColorTheme.secondaryText,
+                      color: ableToTapSubmitButton
+                          ? ColorTheme.primaryWhite
+                          : ColorTheme.secondaryText,
                     ),
                   ),
                 ),
